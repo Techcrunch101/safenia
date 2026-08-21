@@ -1,0 +1,6 @@
+{
+  "name": "Safenia Luxury Oils",
+  "description": "Global luxury botanical haircare brand — Nature's Care for Every Crown.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #050505;
+    --bg-surface: #0c0c0d;
+    --bg-surface-hover: #141416;
+    --gold-deep: #75410A;
+    --gold-bronze: #9E6924;
+    --gold-classic: #BF914A;
+    --gold-light: #D8B26F;
+    --gold-champagne: #F3E5C8;
+    --warm-ivory: #F8F5F0;
+  }
+
+  body {
+    background-color: #050505;
+    color: #F8F5F0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+    selection-background-color: #BF914A;
+    selection-color: #050505;
+  }
+
+  h1, h2, h3, h4, .font-serif-luxury {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+}
+
+/* Luxury Custom Utilities */
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #75410A 0%, #BF914A 50%, #D8B26F 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F3E5C8 0%, #D8B26F 40%, #BF914A 70%, #9E6924 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-shimmer {
+  background: linear-gradient(90deg, #BF914A 0%, #F3E5C8 25%, #D8B26F 50%, #F3E5C8 75%, #BF914A 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.border-gold-subtle {
+  border-color: rgba(191, 145, 74, 0.25);
+}
+
+.border-gold-glow {
+  border-color: rgba(216, 178, 111, 0.5);
+  box-shadow: 0 0 15px rgba(191, 145, 74, 0.15);
+}
+
+.glass-dark {
+  background: rgba(12, 12, 13, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-gold {
+  background: rgba(15, 12, 8, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(191, 145, 74, 0.2);
+}
+
+/* Custom Gold Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #75410A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #BF914A;
+}
+
