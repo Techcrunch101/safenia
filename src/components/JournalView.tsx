@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { SAFENIA_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 interface JournalViewProps {
   onShopClick: () => void;
@@ -15,7 +17,7 @@ export const JournalView: React.FC<JournalViewProps> = ({ onShopClick }) => {
       date: 'OCTOBER 2024',
       snippet:
         'Understanding lipid chemistry and why synthetic mineral oils merely coat the surface while cold-pressed botanical lipids penetrate and nourish the follicular matrix.',
-      image: '/src/assets/images/safenia_emerald_botanical_hero_1787295575998.jpg',
+      image: SAFENIA_IMAGES.emeraldBotanicalHero,
       content:
         'Mineral oil is a petroleum byproduct that creates an occlusive plastic-like seal over the scalp, blocking natural perspiration and trapping sebum. In contrast, cold-pressed oils like Castor, Jojoba, and Almond are biologically compatible with human sebum. They deliver essential omega-6 and omega-9 fatty acids, zinc, and tocopherol directly to the scalp barrier.',
     },
@@ -27,7 +29,7 @@ export const JournalView: React.FC<JournalViewProps> = ({ onShopClick }) => {
       date: 'SEPTEMBER 2024',
       snippet:
         'How standard cotton weaves rob hair of up to 40% of its moisture overnight, and why pure silk preserves hydration, curl definition, and delicate hairline edges.',
-      image: '/src/assets/images/safenia_growth_afro_1787295304984.jpg',
+      image: SAFENIA_IMAGES.growthAfro,
       content:
         'Cotton is an ultra-absorbent fiber that wicks moisture away from your hair shaft while you sleep. The friction caused by tossing on a cotton pillowcase also lifts the hair cuticle, leading to mechanical breakage, split ends, and morning frizz. Grade 6A Mulberry Silk has an exceptionally smooth protein-based surface that glides against strands, preserving natural lipids and styles.',
     },
@@ -39,7 +41,7 @@ export const JournalView: React.FC<JournalViewProps> = ({ onShopClick }) => {
       date: 'AUGUST 2024',
       snippet:
         'How 4 minutes of standardized mechanical scalp stimulation increases subcutaneous blood flow and activates anagen-phase hair growth genes.',
-      image: '/src/assets/images/safenia_loc_care_gold_1787295319757.jpg',
+      image: SAFENIA_IMAGES.locCareGold,
       content:
         'Clinical studies in dermatology have proven that direct mechanical tension delivered to dermal papilla cells stimulates gene expression linked to hair cycle prolongation. Pairing this mechanical stimulation with rosemary and peppermint infusions amplifies micro-circulation significantly.',
     },
@@ -87,10 +89,9 @@ export const JournalView: React.FC<JournalViewProps> = ({ onShopClick }) => {
             </div>
 
             <div className="aspect-[16/9] w-full overflow-hidden bg-[#D9CCB8]/40 shadow-[0_15px_40px_-10px_rgba(23,19,15,0.08)]">
-              <img
+              <SafeImage
                 src={selectedArticle.image}
                 alt={selectedArticle.title}
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -130,10 +131,9 @@ export const JournalView: React.FC<JournalViewProps> = ({ onShopClick }) => {
               >
                 <div className="space-y-4">
                   <div className="aspect-[16/10] overflow-hidden bg-[#D9CCB8]/40 shadow-[0_15px_40px_-10px_rgba(23,19,15,0.08)]">
-                    <img
+                    <SafeImage
                       src={art.image}
                       alt={art.title}
-                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                   </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { ArrowRight, Leaf, ShieldCheck, Sparkles, Heart, Crown } from 'lucide-react';
 import { Logo } from './Logo';
+import { SAFENIA_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 interface AboutViewProps {
   onShopClick: () => void;
@@ -80,10 +82,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ onShopClick }) => {
 
           <div className="lg:col-span-6 order-1 lg:order-2 space-y-6">
             <div className="aspect-[4/5] w-full overflow-hidden bg-[#D9CCB8]/40 shadow-[0_15px_40px_-10px_rgba(23,19,15,0.08)]">
-              <img
-                src="/src/assets/images/safenia_founder_portrait_1787295337583.jpg"
+              <SafeImage
+                src={SAFENIA_IMAGES.serenAesthetic}
                 alt="Safenia Botanical Hair Care Craftsmanship"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center"
               />
             </div>

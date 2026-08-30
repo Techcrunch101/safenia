@@ -1,6 +1,8 @@
 import React from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { Logo } from './Logo';
+import { SAFENIA_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 interface AboutTeaserProps {
   onAboutClick: () => void;
@@ -20,8 +22,8 @@ export const AboutTeaser: React.FC<AboutTeaserProps> = ({ onAboutClick }) => {
           {/* Left: Glowing Portrait */}
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] w-full overflow-hidden bg-[#14110E] border border-[#D4AF37]/20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group">
-              <img
-                src="/src/assets/images/safenia_dark_philosophy_1787788278268.jpg"
+              <SafeImage
+                src={SAFENIA_IMAGES.darkPhilosophy}
                 alt="Safenia Philosophy - Intentional Botanical Crown Care"
                 className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out"
               />

@@ -1,7 +1,9 @@
 import React from 'react';
+import { SAFENIA_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 // Official high-resolution generated and raster assets for Safenia
-export const SAFENIA_LOGO_IMAGE_URL = '/src/assets/images/safenia_official_logo_1787739602613.jpg';
+export const SAFENIA_LOGO_IMAGE_URL = SAFENIA_IMAGES.officialLogo;
 
 interface LogoProps {
   variant?: 'nav' | 'full' | 'compact' | 'footer' | 'icon' | 'badge' | 'card' | 'image';
@@ -144,10 +146,9 @@ export const Logo: React.FC<LogoProps> = ({
     };
     return (
       <div className={`inline-flex items-center justify-center ${className}`}>
-        <img
+        <SafeImage
           src={SAFENIA_LOGO_IMAGE_URL}
           alt="Safenia Luxury Oils"
-          referrerPolicy="no-referrer"
           className={`${imgHeights[size]} object-contain drop-shadow-md rounded-xs`}
         />
       </div>

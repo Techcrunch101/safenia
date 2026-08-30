@@ -1,5 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { SAFENIA_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 interface RitualViewProps {
   onShopClick: () => void;
@@ -51,10 +53,9 @@ export const RitualView: React.FC<RitualViewProps> = ({ onShopClick }) => {
           </div>
           <div className="lg:col-span-6">
             <div className="aspect-[4/3] overflow-hidden bg-[#D9CCB8]/40 shadow-[0_15px_40px_-10px_rgba(23,19,15,0.08)]">
-              <img
-                src="/src/assets/images/safenia_loc_care_gold_1787295319757.jpg"
+              <SafeImage
+                src={SAFENIA_IMAGES.locCareGold}
                 alt="Scalp Massage Care"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -65,10 +66,9 @@ export const RitualView: React.FC<RitualViewProps> = ({ onShopClick }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-20 border-b border-[#17130F]/08">
           <div className="lg:col-span-6 order-2 lg:order-1">
             <div className="aspect-[4/3] overflow-hidden bg-[#D9CCB8]/40 shadow-[0_15px_40px_-10px_rgba(23,19,15,0.08)]">
-              <img
-                src="/src/assets/images/safenia_rose_infusion_1787295593809.jpg"
+              <SafeImage
+                src={SAFENIA_IMAGES.serenWarmHero}
                 alt="Botanical Moisture Nectar"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -119,10 +119,9 @@ export const RitualView: React.FC<RitualViewProps> = ({ onShopClick }) => {
           </div>
           <div className="lg:col-span-6">
             <div className="aspect-[4/3] overflow-hidden bg-[#D9CCB8]/40 shadow-[0_15px_40px_-10px_rgba(23,19,15,0.08)]">
-              <img
-                src="/src/assets/images/safenia_growth_afro_1787295304984.jpg"
+              <SafeImage
+                src={SAFENIA_IMAGES.growthAfro}
                 alt="Silk Crown Protection"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
             </div>

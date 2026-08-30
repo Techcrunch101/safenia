@@ -3,6 +3,7 @@ import { ShopifyCart } from '../types';
 import { formatPrice, isShopifyConfigured } from '../utils/shopify';
 import { X, Trash2, ArrowRight, ShoppingBag, Leaf, AlertCircle, Loader2 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { SafeImage } from './SafeImage';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -116,10 +117,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     >
                       {/* Thumbnail */}
                       <div className="w-16 h-20 bg-[#0B0908] border border-[#D4AF37]/10 overflow-hidden shrink-0">
-                        <img
+                        <SafeImage
                           src={image}
                           alt={item.product.title}
-                          referrerPolicy="no-referrer"
                           className="w-full h-full object-cover"
                         />
                       </div>

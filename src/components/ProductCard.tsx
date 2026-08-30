@@ -2,6 +2,7 @@ import React from 'react';
 import { Product } from '../types';
 import { ArrowRight, Plus } from 'lucide-react';
 import { formatPrice } from '../utils/shopify';
+import { SafeImage } from './SafeImage';
 
 interface ProductCardProps {
   product: Product;
@@ -24,19 +25,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     >
       {/* Product Image Frame */}
       <div className="relative aspect-[4/5] bg-[#14110E] border border-[#D4AF37]/20 overflow-hidden mb-4 group-hover:border-[#D4AF37]/60 transition-colors">
-        <img
+        <SafeImage
           src={primaryImage}
           alt={product.title}
-          referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
         />
 
         {/* Alternate Hover Image */}
         {product.images.length > 1 && (
-          <img
+          <SafeImage
             src={secondaryImage}
             alt={`${product.title} alternate`}
-            referrerPolicy="no-referrer"
             className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
           />
         )}

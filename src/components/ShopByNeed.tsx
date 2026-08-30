@@ -1,5 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { SAFENIA_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 interface ShopByNeedProps {
   onSelectCategory: (category: string) => void;
@@ -11,25 +13,25 @@ export const ShopByNeed: React.FC<ShopByNeedProps> = ({ onSelectCategory }) => {
       id: 'growth',
       title: 'Hair Growth',
       description: 'Targeted care for fuller, stronger lengths.',
-      image: '/src/assets/images/safenia_growth_afro_1787295304984.jpg',
+      image: SAFENIA_IMAGES.growthAfro,
     },
     {
       id: 'locs',
       title: 'Loc Care',
       description: 'Weightless nourishment for defined, healthy locs.',
-      image: '/src/assets/images/safenia_loc_care_gold_1787295319757.jpg',
+      image: SAFENIA_IMAGES.locCareGold,
     },
     {
       id: 'scalp',
       title: 'Scalp Therapy',
       description: 'Balance, comfort and a restored foundation.',
-      image: '/src/assets/images/safenia_scalp_pipette_1787788293314.jpg',
+      image: SAFENIA_IMAGES.scalpPipetteSecondary,
     },
     {
       id: 'beard',
       title: 'Beard Care',
       description: 'Softness, shape and conditioned skin beneath.',
-      image: '/src/assets/images/safenia_beard_grooming_1787295352369.jpg',
+      image: SAFENIA_IMAGES.beardGrooming,
     },
   ];
 
@@ -62,7 +64,7 @@ export const ShopByNeed: React.FC<ShopByNeedProps> = ({ onSelectCategory }) => {
               className="group relative flex flex-col justify-end aspect-[4/5] sm:aspect-[3/4] lg:aspect-[3/4.2] w-full overflow-hidden bg-[#14110E] border border-[#D4AF37]/20 cursor-pointer p-6 sm:p-7 text-left transition-all duration-400 hover:border-[#D4AF37]/60"
             >
               {/* Full-Bleed Photography */}
-              <img
+              <SafeImage
                 src={item.image}
                 alt={item.title}
                 className="absolute inset-0 w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out"

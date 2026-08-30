@@ -3,6 +3,7 @@ import { Product } from '../types';
 import { formatPrice } from '../utils/shopify';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { SafeImage } from './SafeImage';
 
 interface FeaturedProductsProps {
   products: Product[];
@@ -63,10 +64,9 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
             >
               {/* Product Visual Container */}
               <div className="relative aspect-[4/5] sm:aspect-[16/11] lg:aspect-[4/4.7] w-full overflow-hidden bg-[#14110E] border border-[#D4AF37]/20 mb-6">
-                <img
+                <SafeImage
                   src={heroProduct.featuredImage || heroProduct.images[0]}
                   alt={heroProduct.title}
-                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-center transform transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                 />
 
@@ -111,10 +111,9 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
                 onClick={() => onSelectProduct(sideProduct1)}
               >
                 <div className="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] w-full overflow-hidden bg-[#14110E] border border-[#D4AF37]/20 mb-4">
-                  <img
+                  <SafeImage
                     src={sideProduct1.featuredImage || sideProduct1.images[0]}
                     alt={sideProduct1.title}
-                    referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-center transform transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                   />
                   <div className="absolute bottom-4 left-4 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-350">
@@ -153,10 +152,9 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
                 onClick={() => onSelectProduct(sideProduct2)}
               >
                 <div className="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] w-full overflow-hidden bg-[#14110E] border border-[#D4AF37]/20 mb-4">
-                  <img
+                  <SafeImage
                     src={sideProduct2.featuredImage || sideProduct2.images[0]}
                     alt={sideProduct2.title}
-                    referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-center transform transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                   />
                   <div className="absolute bottom-4 left-4 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-350">

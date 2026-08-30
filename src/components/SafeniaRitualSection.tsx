@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { SAFENIA_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 interface SafeniaRitualSectionProps {
   onShopClick?: () => void;
@@ -52,8 +54,8 @@ export const SafeniaRitualSection: React.FC<SafeniaRitualSectionProps> = ({ onSh
             <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full overflow-hidden bg-[#14110E] border border-[#D4AF37]/25 shadow-2xl group select-none">
               
               {/* After Image (Week 16) */}
-              <img
-                src="/src/assets/images/safenia_dark_philosophy_1787788278268.jpg"
+              <SafeImage
+                src={SAFENIA_IMAGES.darkPhilosophy}
                 alt="Week 16 - Resilient, flourishing crown"
                 className="absolute inset-0 w-full h-full object-cover object-center"
               />
@@ -63,8 +65,8 @@ export const SafeniaRitualSection: React.FC<SafeniaRitualSectionProps> = ({ onSh
                 className="absolute inset-0 overflow-hidden"
                 style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
               >
-                <img
-                  src="/src/assets/images/safenia_growth_afro_1787295304984.jpg"
+                <SafeImage
+                  src={SAFENIA_IMAGES.growthAfro}
                   alt="Week 0 - Foundation start"
                   className="absolute inset-0 w-full h-full object-cover object-center filter grayscale-[30%] contrast-[95%]"
                 />

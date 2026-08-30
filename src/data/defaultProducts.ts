@@ -1,4 +1,5 @@
 import { Product } from '../types';
+import { SAFENIA_IMAGES } from '../assets/images';
 
 export const DEFAULT_PRODUCTS: Product[] = [
   {
@@ -9,11 +10,11 @@ export const DEFAULT_PRODUCTS: Product[] = [
       'A nutrient-dense botanical elixir infused with rosemary, amla, and cold-pressed castor oil. Specially crafted to nourish the scalp, support length retention, and leave hair soft, resilient, and thriving.',
     price: 48,
     currencyCode: 'USD',
-    featuredImage: '/src/assets/images/safenia_emerald_botanical_hero_1787295575998.jpg',
+    featuredImage: SAFENIA_IMAGES.emeraldBotanicalHero,
     images: [
-      '/src/assets/images/safenia_emerald_botanical_hero_1787295575998.jpg',
-      '/src/assets/images/safenia_growth_afro_1787295304984.jpg',
-      '/src/assets/images/safenia_hero_bottle_1785599770184.jpg',
+      SAFENIA_IMAGES.emeraldBotanicalHero,
+      SAFENIA_IMAGES.growthAfro,
+      SAFENIA_IMAGES.heroBottle,
     ],
     category: 'growth',
     availableForSale: true,
@@ -70,11 +71,11 @@ export const DEFAULT_PRODUCTS: Product[] = [
       'A featherlight botanical oil blend featuring sweet almond, argan, and kalahari melon seed oil. Formulated to replenish moisture, smooth hair cuticles, and restore natural luster to parched curls and coils.',
     price: 45,
     currencyCode: 'USD',
-    featuredImage: '/src/assets/images/safenia_seren_warm_hero_1787295590207.jpg',
+    featuredImage: SAFENIA_IMAGES.serenWarmHero,
     images: [
-      '/src/assets/images/safenia_seren_warm_hero_1787295590207.jpg',
-      '/src/assets/images/safenia_loc_care_gold_1787295319757.jpg',
-      '/src/assets/images/safenia_product_boxes_1785599787566.jpg',
+      SAFENIA_IMAGES.serenWarmHero,
+      SAFENIA_IMAGES.locCareGold,
+      SAFENIA_IMAGES.productBoxes,
     ],
     category: 'moisture',
     availableForSale: true,
@@ -128,11 +129,11 @@ export const DEFAULT_PRODUCTS: Product[] = [
       'A soothing botanical scalp elixir infused with tea tree, peppermint, and chamomile. Formulated to calm scalp dryness, support balanced sebum, and provide refreshing comfort for tight protective styles and locs.',
     price: 42,
     currencyCode: 'USD',
-    featuredImage: '/src/assets/images/safenia_scalp_pipette_1787295337432.jpg',
+    featuredImage: SAFENIA_IMAGES.scalpPipettePrimary,
     images: [
-      '/src/assets/images/safenia_scalp_pipette_1787295337432.jpg',
-      '/src/assets/images/safenia_beard_grooming_1787295352369.jpg',
-      '/src/assets/images/safenia_hero_bottle_1785599770184.jpg',
+      SAFENIA_IMAGES.scalpPipettePrimary,
+      SAFENIA_IMAGES.beardGrooming,
+      SAFENIA_IMAGES.heroBottle,
     ],
     category: 'scalp',
     availableForSale: true,

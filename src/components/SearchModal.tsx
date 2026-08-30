@@ -3,6 +3,7 @@ import { Product } from '../types';
 import { Search, X, ArrowRight } from 'lucide-react';
 import { formatPrice } from '../utils/shopify';
 import { useLanguage } from '../i18n/LanguageContext';
+import { SafeImage } from './SafeImage';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -71,10 +72,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     }}
                     className="flex items-center space-x-4 p-3.5 border border-[#17130F]/08 hover:border-[#17130F] transition-all cursor-pointer text-left bg-[#D9CCB8]/20"
                   >
-                    <img
+                    <SafeImage
                       src={img}
                       alt={product.title}
-                      referrerPolicy="no-referrer"
                       className="w-12 h-15 object-cover bg-[#D9CCB8] shrink-0"
                     />
                     <div className="flex-1 min-w-0">

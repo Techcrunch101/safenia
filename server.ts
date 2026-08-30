@@ -1,12 +1,7 @@
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
-import { DEFAULT_PRODUCTS } from './src/data/defaultProducts';
-
-const currentFilename = typeof __filename !== 'undefined' ? __filename : (import.meta && import.meta.url ? fileURLToPath(import.meta.url) : '');
-const currentDirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(currentFilename || process.cwd());
 
 const app = express();
 const PORT = 3000;
@@ -21,6 +16,45 @@ function getAIClient(): GoogleGenAI | null {
   }
   return aiClient;
 }
+
+const FALLBACK_PRODUCTS = [
+  {
+    id: 'gid://shopify/Product/safenia-growth-oil',
+    handle: 'safenia-growth-oil',
+    title: 'Safenia Crown Growth Hair Oil',
+    description: 'A nutrient-dense botanical elixir infused with rosemary, amla, and cold-pressed castor oil.',
+    price: 48,
+    currencyCode: 'USD',
+    featuredImage: '/images/safenia_emerald_botanical_hero_1787295575998.jpg',
+    images: ['/images/safenia_emerald_botanical_hero_1787295575998.jpg'],
+    category: 'growth',
+    availableForSale: true,
+  },
+  {
+    id: 'gid://shopify/Product/safenia-moisture-nectar',
+    handle: 'safenia-moisture-nectar',
+    title: 'Safenia Botanical Moisture Nectar',
+    description: 'A featherlight botanical oil blend featuring sweet almond, argan, and kalahari melon seed oil.',
+    price: 45,
+    currencyCode: 'USD',
+    featuredImage: '/images/safenia_seren_warm_hero_1787295590207.jpg',
+    images: ['/images/safenia_seren_warm_hero_1787295590207.jpg'],
+    category: 'moisture',
+    availableForSale: true,
+  },
+  {
+    id: 'gid://shopify/Product/safenia-scalp-therapy',
+    handle: 'safenia-scalp-therapy',
+    title: 'Safenia Clarifying Scalp Therapy Drops',
+    description: 'A soothing botanical scalp elixir infused with tea tree, peppermint, and chamomile.',
+    price: 42,
+    currencyCode: 'USD',
+    featuredImage: '/images/safenia_scalp_pipette_1787295337432.jpg',
+    images: ['/images/safenia_scalp_pipette_1787295337432.jpg'],
+    category: 'scalp',
+    availableForSale: true,
+  },
+];
 
 // ================= API ROUTES ================= //
 
@@ -108,7 +142,7 @@ app.get('/api/shopify/status', (req, res) => {
 
 // Fallback products endpoint for initial hydration
 app.get('/api/products', (req, res) => {
-  res.json(DEFAULT_PRODUCTS);
+  res.json(FALLBACK_PRODUCTS);
 });
 
 // ================= VITE MIDDLEWARE SETUP ================= //

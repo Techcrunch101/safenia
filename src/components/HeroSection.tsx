@@ -1,6 +1,8 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { SAFENIA_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 interface HeroSectionProps {
   onShopClick: () => void;
@@ -17,8 +19,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <section className="relative min-h-[92vh] lg:min-h-[96vh] flex items-center justify-center bg-[#070605] pt-24 sm:pt-28 pb-16 lg:pb-12 overflow-hidden">
       {/* Background Image Container with Cinematic Lighting and Vignette */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <img
-          src="/src/assets/images/safenia_dark_hero_bg_1787788259317.jpg"
+        <SafeImage
+          src={SAFENIA_IMAGES.darkHeroBg}
           alt="Safenia Luxury Botanical Bottle"
           className="w-full h-full object-cover object-center sm:object-right lg:object-center opacity-85 scale-105 transform animate-heroImage"
         />

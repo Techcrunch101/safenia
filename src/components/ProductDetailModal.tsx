@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Product, ProductVariant } from '../types';
 import { formatPrice, buildShopifyCartPermalink } from '../utils/shopify';
 import { X, ShoppingBag, ArrowRight, ChevronDown, ChevronUp, Sparkles, ShieldCheck, Leaf } from 'lucide-react';
+import { SafeImage } from './SafeImage';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -66,10 +67,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           {/* Left Column: Image Gallery (~55% / 7 cols) */}
           <div className="lg:col-span-7 space-y-4">
             <div className="relative aspect-[4/5] bg-[#D9CCB8]/30 overflow-hidden">
-              <img
+              <SafeImage
                 src={activeImage}
                 alt={product.title}
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center"
               />
             </div>
@@ -87,10 +87,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <img
+                    <SafeImage
                       src={img}
                       alt={`${product.title} view ${idx + 1}`}
-                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
                   </button>
