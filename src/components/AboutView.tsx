@@ -1,200 +1,202 @@
 import React from 'react';
-import { Crown, Sparkles, Heart, Shield, Leaf, Award, CheckCircle2, ArrowRight } from 'lucide-react';
-import { SafeniaLogo } from './SafeniaLogo';
+import { ArrowRight, Leaf, ShieldCheck, Sparkles, Heart, Crown } from 'lucide-react';
+import { Logo } from './Logo';
 
 interface AboutViewProps {
   onShopClick: () => void;
 }
 
-const heroBottleImg = '/src/assets/images/safenia_hero_bottle_1785599770184.jpg';
-const productBoxesImg = '/src/assets/images/safenia_product_boxes_1785599787566.jpg';
-const silkInspoImg = '/src/assets/images/safenia_silk_inspo_1785599801373.jpg';
-const serenAestheticImg = '/src/assets/images/safenia_seren_aesthetic_1785599818225.jpg';
-
 export const AboutView: React.FC<AboutViewProps> = ({ onShopClick }) => {
-  const values = [
+  const coreValues = [
     {
+      icon: <Leaf className="w-5 h-5 text-[#56604A]" />,
       title: 'Quality',
-      description: 'Premium botanical ingredients and carefully crafted formulations without shortcuts or cheap synthetic fillers.',
-      icon: Award,
+      description: 'We are committed to using premium botanical ingredients and carefully crafted formulations.',
     },
     {
+      icon: <ShieldCheck className="w-5 h-5 text-[#56604A]" />,
       title: 'Integrity',
-      description: 'Honesty, transparency, and uncompromising standards in every bottle we formulate and seal.',
-      icon: Shield,
+      description: 'Every product is made with honesty, transparency, and without compromising on quality.',
     },
     {
+      icon: <Sparkles className="w-5 h-5 text-[#B79B6B]" />,
       title: 'Craftsmanship',
-      description: 'Every single bottle is handmade with precision, patience, and meticulous attention to botanical synergy.',
-      icon: Sparkles,
+      description: 'Each bottle is handmade with precision, passion, and attention to detail.',
     },
     {
+      icon: <Leaf className="w-5 h-5 text-[#56604A]" />,
       title: 'Nature-Inspired',
-      description: 'Harnessing the ancient and scientifically proven power of botanicals to support healthy hair and scalp naturally.',
-      icon: Leaf,
+      description: 'We harness the power of botanicals to support healthy hair and scalp naturally.',
     },
     {
+      icon: <Crown className="w-5 h-5 text-[#B79B6B]" />,
       title: 'Empowerment',
-      description: 'Celebrating every individual crown and instilling confidence through loving, intentional self-care ceremonies.',
-      icon: Crown,
+      description: 'We believe confidence begins with healthy hair, and every crown deserves intentional care.',
     },
   ];
 
   return (
-    <div className="bg-[#050505] text-white min-h-screen">
-      {/* Editorial Hero Header */}
-      <section className="relative py-20 sm:py-32 overflow-hidden border-b border-[#BF914A]/20">
-        <div className="absolute inset-0 bg-radial from-[#75410A]/20 via-[#050505]/90 to-[#050505] pointer-events-none" />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10 space-y-6">
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#111114] border border-[#BF914A]/40 text-[#D8B26F] text-xs font-bold uppercase tracking-[0.25em]">
-            <Crown className="w-3.5 h-3.5 text-[#BF914A]" />
-            <span>The Safenia Story</span>
+    <div className="bg-transparent text-[#17130F] min-h-screen pt-28 pb-32">
+      {/* Editorial Header */}
+      <section className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 mb-20 sm:mb-28">
+        <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 border-b border-[#17130F]/08 gap-6">
+          <div className="text-left space-y-3">
+            <span className="text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.34em] font-semibold text-[#56604A] block">
+              HERITAGE & CRAFTSMANSHIP
+            </span>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif-luxury font-normal text-[#17130F] tracking-tight leading-[0.98]">
+              THE SAFENIA STORY
+            </h1>
           </div>
-
-          <h1 className="text-4xl sm:text-6xl font-serif-luxury font-bold text-white tracking-tight leading-tight">
-            Nature’s Care for Every Crown
-          </h1>
-
-          <p className="text-base sm:text-xl text-zinc-300 font-light leading-relaxed max-w-2xl mx-auto">
-            Safenia Luxury Oils is a premium handcrafted botanical hair-care brand created around healthy hair, intentional craftsmanship, and carefully selected natural ingredients.
+          <p className="text-base text-[#56604A]/90 font-sans-body font-light max-w-md text-left md:text-right leading-relaxed">
+            Nature’s care for every crown. Formulated with purpose, handcrafted with passion.
           </p>
         </div>
       </section>
 
-      {/* Brand Genesis & Origin Story */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          <div className="lg:col-span-6 space-y-6 text-left">
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#D8B26F] font-bold">
-              About Safenia Luxury Oils
+      {/* Main Magazine Layout: Big Photography + Exact Brand Story */}
+      <section className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 space-y-28 sm:space-y-36">
+        {/* Story Section 1: The Origin & Handcrafted Philosophy */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          <div className="lg:col-span-6 order-2 lg:order-1 text-left space-y-6">
+            <span className="text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.32em] text-[#56604A] font-semibold block">
+              OUR ORIGIN & PASSION
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-luxury font-bold text-white">
-              Born from a Passion for Healthy Crowns
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-luxury font-normal text-[#17130F] leading-tight">
+              Crafted from Passion,
+              <br />
+              <span className="italic text-[#56604A]">Formulated with Purpose.</span>
             </h2>
-            <div className="space-y-4 text-zinc-300 text-sm sm:text-base leading-relaxed">
-              <p>
-                Safenia Luxury Oils was born from a passion for healthy hair, intentional craftsmanship, and the belief that every crown deserves the very best care.
-              </p>
-              <p>
-                Every bottle is made from scratch using thoughtfully selected botanical ingredients, herbs and nutrient-rich oils that nourish, protect and restore hair and scalp health naturally.
-              </p>
-              <p className="text-zinc-400 text-sm">
-                We believe that hair care is more than a daily maintenance routine—it is a deeply restorative ceremony of self-care. From our formulation studio to your dressing table, each blend is prepared with reverence for the botanical kingdom and the beauty of natural textures.
-              </p>
+            <p className="text-base sm:text-lg text-[#56604A]/90 font-sans-body font-light leading-relaxed">
+              Safenia Luxury Oils was born from a passion for healthy hair, intentional craftsmanship, and the belief that every crown deserves the very best care. What began as a vision to create high-quality botanical hair oils has grown into a luxury hair care brand dedicated to nourishing both the scalp and hair through carefully handcrafted formulations.
+            </p>
+            <p className="text-base text-[#56604A]/90 font-sans-body font-light leading-relaxed">
+              Every bottle is made from scratch using thoughtfully selected botanical ingredients, herbs, and nutrient-rich oils. We believe that healthy hair starts with a healthy scalp, which is why each formula is created with purpose—to strengthen, nourish, restore moisture, promote growth, and enhance your hair’s natural beauty.
+            </p>
+            <div className="pt-4 border-t border-[#17130F]/08 font-serif-luxury italic text-xl sm:text-2xl text-[#17130F]">
+              "Where luxury meets nature and every drop is formulated to help your crown flourish."
             </div>
           </div>
 
-          <div className="lg:col-span-6 grid grid-cols-2 gap-4">
-            <div className="rounded-2xl overflow-hidden border border-[#BF914A]/30 aspect-[3/4] shadow-2xl">
+          <div className="lg:col-span-6 order-1 lg:order-2 space-y-6">
+            <div className="aspect-[4/5] w-full overflow-hidden bg-[#D9CCB8]/40 shadow-[0_15px_40px_-10px_rgba(23,19,15,0.08)]">
               <img
-                src={serenAestheticImg}
-                alt="Safenia Botanical Aesthetics"
-                className="w-full h-full object-cover"
+                src="/src/assets/images/safenia_founder_portrait_1787295337583.jpg"
+                alt="Safenia Botanical Hair Care Craftsmanship"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-center"
               />
             </div>
-            <div className="rounded-2xl overflow-hidden border border-[#BF914A]/30 aspect-[3/4] translate-y-8 shadow-2xl">
-              <img
-                src={heroBottleImg}
-                alt="Safenia Bottle"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {/* The Master Safenia Black & Gold Seal */}
+            <Logo variant="card" />
           </div>
         </div>
-      </section>
 
-      {/* Mission & Vision Section */}
-      <section className="py-20 bg-[#0a0a0d] border-y border-[#BF914A]/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Our Mission */}
-            <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#141418] to-[#0d0d10] border border-zinc-800 hover:border-[#BF914A]/50 transition-all text-left space-y-4 shadow-xl">
-              <div className="w-12 h-12 rounded-xl bg-[#BF914A]/10 border border-[#BF914A]/30 flex items-center justify-center text-[#D8B26F]">
-                <Heart className="w-6 h-6" />
-              </div>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#D8B26F] font-bold">
-                Purpose & Commitment
+        {/* Mission & Vision: 2 Large Editorial Panels */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 pt-16 border-t border-[#17130F]/08 text-left">
+          {/* Mission Panel */}
+          <div className="space-y-5 p-8 sm:p-12 bg-[#D9CCB8]/20 border border-[#17130F]/08 flex flex-col justify-between">
+            <div className="space-y-4">
+              <span className="text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.32em] text-[#56604A] font-semibold block">
+                OUR MISSION
               </span>
-              <h3 className="text-2xl sm:text-3xl font-serif-luxury font-bold text-white">
-                Our Mission
+              <h3 className="text-3xl sm:text-4xl font-serif-luxury text-[#17130F]">
+                Empowering Healthy, Thriving Hair
               </h3>
-              <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+              <p className="text-sm sm:text-base text-[#56604A]/90 font-sans-body font-light leading-relaxed">
                 To create luxurious, handcrafted botanical hair care products that empower people to embrace healthy, thriving hair through clean, intentional, and effective formulations.
               </p>
             </div>
+            <div className="pt-6 border-t border-[#17130F]/08 text-[10px] font-sans-body uppercase tracking-[0.2em] text-[#7A746B]">
+              CLEAN • INTENTIONAL • EFFECTIVE
+            </div>
+          </div>
 
-            {/* Our Vision */}
-            <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#141418] to-[#0d0d10] border border-zinc-800 hover:border-[#BF914A]/50 transition-all text-left space-y-4 shadow-xl">
-              <div className="w-12 h-12 rounded-xl bg-[#BF914A]/10 border border-[#BF914A]/30 flex items-center justify-center text-[#D8B26F]">
-                <Crown className="w-6 h-6" />
-              </div>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#D8B26F] font-bold">
-                Aspiration & Future
+          {/* Vision Panel */}
+          <div className="space-y-5 p-8 sm:p-12 bg-[#30382D] text-[#F5F0E6] flex flex-col justify-between">
+            <div className="space-y-4">
+              <span className="text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.32em] text-[#B79B6B] font-semibold block">
+                OUR VISION
               </span>
-              <h3 className="text-2xl sm:text-3xl font-serif-luxury font-bold text-white">
-                Our Vision
+              <h3 className="text-3xl sm:text-4xl font-serif-luxury text-[#F5F0E6]">
+                The Trusted Standard in Luxury Botanical Care
               </h3>
-              <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+              <p className="text-sm sm:text-base text-[#D9CCB8]/90 font-sans-body font-light leading-relaxed">
                 To become a trusted luxury botanical hair care brand known for exceptional quality, authenticity, and products that deliver lasting results while celebrating every individual’s unique crown.
               </p>
             </div>
+            <div className="pt-6 border-t border-white/10 text-[10px] font-sans-body uppercase tracking-[0.2em] text-[#B79B6B]">
+              CELEBRATING EVERY INDIVIDUAL’S UNIQUE CROWN
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Core Values */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <span className="text-[11px] uppercase tracking-[0.25em] text-[#D8B26F] font-bold">
-            Guiding Principles
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-serif-luxury font-bold text-white">
-            Our Values
-          </h2>
-          <p className="text-zinc-400 text-sm">
-            The five pillars that guide every formulation, partnership, and customer experience at Safenia.
-          </p>
-        </div>
+        {/* Our Core Values (5 Distinctive Pillars) */}
+        <div className="pt-16 border-t border-[#17130F]/08 text-left">
+          <div className="mb-14 space-y-3">
+            <span className="text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.34em] text-[#56604A] font-semibold block">
+              FOUNDATIONAL PILLARS
+            </span>
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif-luxury text-[#17130F] tracking-tight">
+              OUR CORE VALUES
+            </h2>
+            <p className="text-sm text-[#56604A]/90 font-sans-body font-light max-w-xl">
+              At Safenia Luxury Oils, we don’t believe in shortcuts or unnecessary fillers. Every bottle reflects these unwavering commitments.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {values.map((val, idx) => {
-            const Icon = val.icon;
-            return (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {coreValues.map((val) => (
               <div
-                key={idx}
-                className="p-6 rounded-2xl bg-[#0c0c0f] border border-zinc-800 hover:border-[#BF914A]/50 transition-all text-left flex flex-col justify-between group hover:-translate-y-1"
+                key={val.title}
+                className="p-8 border border-[#17130F]/08 bg-[#F5F0E6] hover:bg-[#D9CCB8]/20 transition-all duration-300 space-y-4 text-left group"
               >
-                <div>
-                  <div className="w-10 h-10 rounded-lg bg-[#BF914A]/10 border border-[#BF914A]/30 flex items-center justify-center text-[#D8B26F] mb-4 group-hover:bg-[#BF914A] group-hover:text-black transition-colors">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h4 className="text-lg font-serif-luxury font-bold text-white mb-2">
-                    {val.title}
-                  </h4>
-                  <p className="text-zinc-400 text-xs leading-relaxed">
-                    {val.description}
-                  </p>
-                </div>
+                <div className="p-2 w-fit bg-[#D9CCB8]/30">{val.icon}</div>
+                <h3 className="font-serif-luxury text-2xl text-[#17130F] group-hover:text-[#56604A] transition-colors">
+                  {val.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#56604A]/90 font-sans-body font-light leading-relaxed">
+                  {val.description}
+                </p>
               </div>
-            );
-          })}
-        </div>
-      </section>
+            ))}
 
-      {/* Editorial CTA */}
-      <section className="py-20 bg-gradient-to-b from-[#0e0e12] to-[#050505] border-t border-[#BF914A]/20 text-center">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-serif-luxury font-bold text-white">
-            Experience the Safenia Ritual
-          </h2>
-          <p className="text-zinc-400 text-sm max-w-xl mx-auto">
-            Discover handcrafted elixirs formulated with precision and botanical care for your crown.
-          </p>
+            {/* Final Value Highlight Box */}
+            <div className="p-8 bg-[#56604A] text-[#F5F0E6] space-y-4 text-left md:col-span-2 lg:col-span-1 flex flex-col justify-between">
+              <div className="space-y-3">
+                <span className="text-[10px] font-sans-body uppercase tracking-[0.28em] text-[#B79B6B] font-semibold block">
+                  PURPOSEFUL FORMULATION
+                </span>
+                <h3 className="font-serif-luxury text-2xl text-[#F5F0E6]">
+                  No Shortcuts. No Fillers.
+                </h3>
+                <p className="text-xs sm:text-sm text-[#D9CCB8] font-sans-body font-light leading-relaxed">
+                  We believe in creating products with purpose where luxury meets nature and every drop is formulated to help your crown flourish.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-white/20 text-[10px] font-sans-body uppercase tracking-[0.2em] text-[#B79B6B]">
+                100% PURE BOTANICAL EXCELLENCE
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA to Shop */}
+        <div className="pt-16 border-t border-[#17130F]/08 flex flex-col sm:flex-row items-center justify-between gap-6 text-left">
+          <div className="space-y-1">
+            <h3 className="font-serif-luxury text-3xl sm:text-4xl text-[#17130F]">
+              Experience Handcrafted Crown Care
+            </h3>
+            <p className="text-sm text-[#56604A]/90 font-sans-body font-light">
+              Explore our small-batch botanical formulations today.
+            </p>
+          </div>
           <button
             onClick={onShopClick}
-            className="px-8 py-4 bg-gradient-to-r from-[#75410A] via-[#BF914A] to-[#D8B26F] text-black font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-xl hover:shadow-2xl transition-all cursor-pointer"
+            className="px-8 py-4 bg-[#17130F] text-[#F5F0E6] text-xs font-semibold uppercase tracking-[0.24em] font-sans-body hover:bg-[#30382D] transition-colors flex items-center space-x-2 cursor-pointer shadow-sm"
           >
-            <span>Explore The Collection</span>
+            <span>SHOP THE COLLECTION</span>
+            <ArrowRight className="w-4 h-4 text-[#B79B6B]" />
           </button>
         </div>
       </section>

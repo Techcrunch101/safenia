@@ -1,230 +1,227 @@
-import React, { useState } from 'react';
-import { PageView, Currency, ShopifyConfig } from '../types';
-import { CURRENCIES } from '../data/currencies';
-import { ShoppingBag, Search, User, Menu, X, ChevronDown, Store } from 'lucide-react';
-import { SafeniaLogo } from './SafeniaLogo';
+import React, { useState, useEffect } from 'react';
+import { PageView } from '../types';
+import { Logo } from './Logo';
+import { ShoppingBag, Menu, X } from 'lucide-react';
+import { getShopifyAccountUrl } from '../utils/shopify';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface HeaderProps {
   currentPage: PageView;
   cartCount: number;
-  selectedCurrency: Currency;
-  shopifyConfig: ShopifyConfig;
-  onNavigate: (page: PageView) => void;
-  onSelectCurrency: (currency: Currency) => void;
+  onNavigate: (page: PageView, category?: string) => void;
+  onOpenSearch?: () => void;
   onOpenCart: () => void;
-  onOpenAccount: () => void;
-  onOpenShopifyConfig: () => void;
-  onOpenSearch: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentPage,
   cartCount,
-  selectedCurrency,
-  shopifyConfig,
   onNavigate,
-  onSelectCurrency,
   onOpenCart,
-  onOpenAccount,
-  onOpenShopifyConfig,
-  onOpenSearch,
 }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false);
+  const { t } = useLanguage();
 
-  const navLinks: { label: string; page: PageView }[] = [
-    { label: 'Home', page: 'home' },
-    { label: 'Shop', page: 'shop' },
-    { label: 'About', page: 'about' },
-    { label: 'Track Order', page: 'track' },
-    { label: 'Contact', page: 'contact' },
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isHomePage = currentPage === 'home';
+
+  // Desktop navigation items translated dynamically
+  const navItems: { label: string; page: PageView }[] = [
+    { label: t('nav_shop', 'SHOP'), page: 'shop' },
+    { label: t('nav_about', 'ABOUT'), page: 'about' },
+    { label: t('nav_ritual', 'RITUALS'), page: 'ritual' },
+    { label: t('nav_journal', 'JOURNAL'), page: 'journal' },
+    { label: t('nav_contact', 'CONTACT'), page: 'contact' },
   ];
+
+  const handleMobileNav = (page: PageView) => {
+    setIsMobileMenuOpen(false);
+    onNavigate(page);
+  };
 
   return (
     <>
-      {/* Main Luxury Header */}
-      <header className="sticky top-0 z-40 bg-[#050505]/95 backdrop-blur-xl border-b border-[#BF914A]/20 transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Mobile Menu Button */}
-            <div className="flex items-center lg:hidden">
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 text-zinc-300 hover:text-white focus:outline-none cursor-pointer"
-                aria-label="Toggle menu"
-              >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-
-            {/* Left: Brand Logo & Slogan */}
-            <div
-              onClick={() => onNavigate('home')}
-              className="cursor-pointer flex items-center space-x-3 group"
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-400 ease-out ${
+          isScrolled || !isHomePage
+            ? 'h-[76px] sm:h-[80px] bg-[#0B0908]/95 backdrop-blur-md border-b border-[#D4AF37]/15 shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
+            : 'h-[84px] sm:h-[90px] bg-gradient-to-b from-[#0B0908]/90 via-[#0B0908]/50 to-transparent border-b border-[#D4AF37]/10'
+        }`}
+      >
+        <div className="max-w-[1440px] h-full mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between">
+          {/* Mobile: Left Hamburger */}
+          <div className="flex items-center lg:hidden w-1/4 justify-start">
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 -ml-2 text-[#F5F0E6] hover:text-[#D4AF37] transition-colors cursor-pointer"
+              aria-label="Open Navigation Menu"
             >
-              <SafeniaLogo variant="horizontal" />
+              <Menu className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Logo (Desktop: Upper-Left | Mobile: Centered) */}
+          <div className="flex items-center justify-center lg:justify-start flex-1 lg:flex-none">
+            <button
+              onClick={() => onNavigate('home')}
+              className="text-left cursor-pointer transition-opacity duration-300 hover:opacity-80"
+            >
+              <Logo variant="nav" theme="dark" size="md" />
+            </button>
+          </div>
+
+          {/* Desktop Center Editorial Nav */}
+          <nav className="hidden lg:flex items-center space-x-8 xl:space-x-11">
+            {navItems.map((item) => {
+              const isActive = currentPage === item.page || (item.page === 'ritual' && currentPage === 'care');
+              return (
+                <button
+                  key={item.page}
+                  onClick={() => onNavigate(item.page)}
+                  className={`relative text-[11.5px] uppercase tracking-[0.24em] font-sans-body transition-colors duration-300 cursor-pointer py-1.5 ${
+                    isActive
+                      ? 'font-bold text-[#D4AF37]'
+                      : 'font-normal text-[#F5F0E6]/80 hover:text-[#D4AF37]'
+                  }`}
+                >
+                  {item.label}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#D4AF37] animate-fadeIn" />
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Right Utility Navigation: LANGUAGE SWITCHER, ACCOUNT, BAG */}
+          <div className="flex items-center justify-end space-x-3.5 sm:space-x-5 xl:space-x-6 w-1/4 lg:w-auto">
+            {/* 10-Language Switcher */}
+            <div className="hidden sm:block">
+              <LanguageSwitcher variant="desktop" />
             </div>
 
-            {/* Center: Main Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              {navLinks.map((link) => {
-                const isActive = currentPage === link.page;
-                return (
-                  <button
-                    key={link.page}
-                    onClick={() => onNavigate(link.page)}
-                    className={`relative text-xs uppercase tracking-[0.2em] font-medium py-2 transition-all cursor-pointer ${
-                      isActive
-                        ? 'text-[#D8B26F] font-bold'
-                        : 'text-zinc-300 hover:text-white'
-                    }`}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#75410A] via-[#BF914A] to-[#D8B26F] rounded-full animate-fadeIn" />
-                    )}
-                  </button>
-                );
-              })}
-            </nav>
+            {/* Account */}
+            <a
+              href={getShopifyAccountUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex items-center text-[#F5F0E6]/80 hover:text-[#D4AF37] transition-colors group"
+              aria-label="Shopify Customer Account"
+            >
+              <span className="text-[11px] uppercase tracking-[0.22em] font-sans-body font-medium text-[#F5F0E6]/80 group-hover:text-[#D4AF37]">
+                {t('nav_account', 'ACCOUNT')}
+              </span>
+            </a>
 
-            {/* Right: Actions (Search, Account, Cart, Shopify Badge) */}
-            <div className="flex items-center space-x-3 sm:space-x-5">
-              {/* Search Button */}
-              <button
-                onClick={onOpenSearch}
-                className="p-2 text-zinc-300 hover:text-[#D8B26F] transition-colors cursor-pointer"
-                title="Search oils and products"
-              >
-                <Search className="w-5 h-5" />
-              </button>
-
-              {/* Shopify Account Button */}
-              <button
-                onClick={onOpenAccount}
-                className="p-2 text-zinc-300 hover:text-[#D8B26F] transition-colors cursor-pointer hidden sm:flex items-center space-x-1.5"
-                title="Shopify Customer Account"
-              >
-                <User className="w-5 h-5" />
-                <span className="text-xs uppercase tracking-wider hidden md:inline">Account</span>
-              </button>
-
-              {/* Shopify Connection Pill */}
-              <button
-                onClick={onOpenShopifyConfig}
-                className="hidden xl:flex items-center space-x-1.5 text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full bg-[#182613] text-[#96BF48] border border-[#96BF48]/40 hover:bg-[#96BF48] hover:text-black transition-colors cursor-pointer"
-                title="Shopify Backend Connected"
-              >
-                <Store className="w-3 h-3" />
-                <span>Shopify</span>
-              </button>
-
-              {/* Currency Switcher */}
+            {/* Bag */}
+            <button
+              onClick={onOpenCart}
+              className="flex items-center space-x-2 text-[#F5F0E6] hover:text-[#D4AF37] transition-colors cursor-pointer group"
+              aria-label={`Shopping Bag with ${cartCount} items`}
+            >
               <div className="relative">
-                <button
-                  onClick={() => setIsCurrencyDropdownOpen(!isCurrencyDropdownOpen)}
-                  className="flex items-center space-x-1 hover:text-white transition-colors cursor-pointer py-1 px-2 rounded-lg bg-zinc-900/80 border border-zinc-800 text-xs text-[#D8B26F]"
-                >
-                  <span>{selectedCurrency.flag}</span>
-                  <span className="font-semibold text-[11px]">{selectedCurrency.code}</span>
-                  <ChevronDown className="w-3 h-3 text-zinc-400" />
-                </button>
-
-                {isCurrencyDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-44 bg-[#0c0c0d] border border-[#BF914A]/40 rounded-xl shadow-2xl py-1 z-50 animate-fadeIn">
-                    {CURRENCIES.map((curr) => (
-                      <button
-                        key={curr.code}
-                        onClick={() => {
-                          onSelectCurrency(curr);
-                          setIsCurrencyDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-[#BF914A]/20 transition-colors cursor-pointer ${
-                          selectedCurrency.code === curr.code ? 'text-[#D8B26F] font-bold bg-[#BF914A]/10' : 'text-zinc-300'
-                        }`}
-                      >
-                        <span className="flex items-center space-x-2">
-                          <span>{curr.flag}</span>
-                          <span>{curr.code}</span>
-                        </span>
-                        <span className="text-zinc-400 font-mono text-[10px]">{curr.symbol}</span>
-                      </button>
-                    ))}
-                  </div>
+                <ShoppingBag className="w-4 h-4 text-[#F5F0E6] group-hover:text-[#D4AF37] transition-colors" />
+                {cartCount > 0 && (
+                  <span className="lg:hidden absolute -top-1.5 -right-2 bg-[#D4AF37] text-[#0B0908] text-[9px] font-sans-body w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
                 )}
               </div>
+              <span className="hidden sm:inline text-[11px] uppercase tracking-[0.22em] font-sans-body font-medium text-[#F5F0E6] group-hover:text-[#D4AF37]">
+                {t('nav_bag', 'BAG')} ({cartCount})
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
 
-              {/* Cart Button */}
-              <button
-                onClick={onOpenCart}
-                className="relative p-2 text-zinc-300 hover:text-[#D8B26F] transition-colors cursor-pointer flex items-center space-x-1.5"
-                title="Shopping Bag"
-              >
-                <div className="relative">
-                  <ShoppingBag className="w-5 h-5 text-[#BF914A]" />
-                  {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-gradient-to-r from-[#75410A] to-[#BF914A] text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-lg">
-                      {cartCount}
-                    </span>
-                  )}
-                </div>
-                <span className="text-xs uppercase tracking-wider hidden sm:inline font-semibold">
-                  Cart
-                </span>
-              </button>
+      {/* Mobile Editorial Drawer */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden flex flex-col bg-[#0B0908] text-[#F5F0E6] animate-fadeIn">
+          {/* Drawer Top */}
+          <div className="p-6 border-b border-[#D4AF37]/15 flex items-center justify-between">
+            <Logo variant="nav" theme="dark" size="sm" />
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 text-[#F5F0E6] hover:text-[#D4AF37] transition-colors cursor-pointer"
+              aria-label="Close Navigation Menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Nav List */}
+          <div className="p-8 flex-1 flex flex-col justify-between overflow-y-auto space-y-8">
+            <div className="space-y-8 text-left">
+              <span className="text-[9px] uppercase tracking-[0.34em] text-[#D4AF37] font-semibold block">
+                {t('nav_language', 'NAVIGATION')}
+              </span>
+              <div className="space-y-4">
+                {navItems.map((item) => (
+                  <button
+                    key={item.page}
+                    onClick={() => handleMobileNav(item.page)}
+                    className="block w-full text-left font-serif-luxury text-3xl sm:text-4xl text-[#F5F0E6] hover:text-[#D4AF37] transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="pt-6 border-t border-[#D4AF37]/15 space-y-3">
+                <button
+                  onClick={() => handleMobileNav('track')}
+                  className="block w-full text-left text-xs uppercase tracking-[0.22em] text-[#B3ACA0] hover:text-[#D4AF37]"
+                >
+                  {t('nav_track_order', 'TRACK ORDER')}
+                </button>
+                <a
+                  href={getShopifyAccountUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-xs uppercase tracking-[0.22em] text-[#B3ACA0] hover:text-[#D4AF37]"
+                >
+                  {t('nav_shopify_account', 'SHOPIFY ACCOUNT')} ↗
+                </a>
+              </div>
+
+              {/* 10-Language Selection Grid in Mobile Drawer */}
+              <div className="pt-6 border-t border-[#D4AF37]/15">
+                <LanguageSwitcher
+                  variant="mobile-drawer"
+                  onSelect={() => setIsMobileMenuOpen(false)}
+                />
+              </div>
+            </div>
+
+            {/* Bottom Statement */}
+            <div className="pt-6 border-t border-[#D4AF37]/15 text-left">
+              <p className="font-serif-luxury italic text-base text-[#D4AF37]">
+                {t('hero_title_line1', 'Nature’s Care for')} {t('hero_title_line2', 'Every Crown')}
+              </p>
+              <p className="text-[9.5px] uppercase tracking-[0.28em] text-[#B3ACA0] mt-1.5 font-medium">
+                {t('hero_tagline', 'Handcrafted Botanical Luxury')}
+              </p>
             </div>
           </div>
         </div>
-
-        {/* Mobile Navigation Drawer */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden bg-[#0a0a0c] border-b border-[#BF914A]/30 px-6 py-6 space-y-4 animate-fadeIn">
-            <nav className="flex flex-col space-y-3">
-              {navLinks.map((link) => {
-                const isActive = currentPage === link.page;
-                return (
-                  <button
-                    key={link.page}
-                    onClick={() => {
-                      onNavigate(link.page);
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className={`text-left text-sm uppercase tracking-widest py-2 border-b border-zinc-900 transition-colors ${
-                      isActive ? 'text-[#D8B26F] font-bold' : 'text-zinc-300'
-                    }`}
-                  >
-                    {link.label}
-                  </button>
-                );
-              })}
-            </nav>
-
-            <div className="pt-4 flex items-center justify-between border-t border-zinc-800 text-xs">
-              <button
-                onClick={() => {
-                  onOpenAccount();
-                  setIsMobileMenuOpen(false);
-                }}
-                className="flex items-center space-x-2 text-zinc-300 hover:text-[#D8B26F]"
-              >
-                <User className="w-4 h-4 text-[#BF914A]" />
-                <span>Shopify Account</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  onOpenShopifyConfig();
-                  setIsMobileMenuOpen(false);
-                }}
-                className="flex items-center space-x-1.5 text-[#96BF48] font-medium"
-              >
-                <Store className="w-4 h-4" />
-                <span>Configure Shopify</span>
-              </button>
-            </div>
-          </div>
-        )}
-      </header>
+      )}
     </>
   );
 };
+
+

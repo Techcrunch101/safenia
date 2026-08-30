@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
-import { PRODUCTS, REVIEWS, JOURNAL_ARTICLES } from './src/data/mockData';
+import { DEFAULT_PRODUCTS } from './src/data/defaultProducts';
 
 const currentFilename = typeof __filename !== 'undefined' ? __filename : (import.meta && import.meta.url ? fileURLToPath(import.meta.url) : '');
 const currentDirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(currentFilename || process.cwd());
@@ -13,7 +13,7 @@ const PORT = 3000;
 
 app.use(express.json());
 
-// Lazy Gemini AI Client Initialization
+// Lazy Gemini AI Client Initialization (Server-side)
 let aiClient: GoogleGenAI | null = null;
 function getAIClient(): GoogleGenAI | null {
   if (!aiClient && process.env.GEMINI_API_KEY) {
@@ -22,169 +22,93 @@ function getAIClient(): GoogleGenAI | null {
   return aiClient;
 }
 
-// ================= API ENDPOINTS ================= //
+// ================= API ROUTES ================= //
 
 // Health Check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     brand: 'Safenia Luxury Oils',
-    tagline: "Nature's Care for Every Crown",
-    serverTime: new Date().toISOString(),
+    slogan: "Nature's Care for Every Crown",
+    email: 'safenialuxuryoils@gmail.com',
+    timestamp: new Date().toISOString(),
   });
 });
 
-// Get All Products
-app.get('/api/products', (req, res) => {
-  const { collection, hairType } = req.query;
-  let filtered = [...PRODUCTS];
-
-  if (collection) {
-    filtered = filtered.filter((p) => p.collection === collection);
-  }
-  if (hairType) {
-    filtered = filtered.filter((p) =>
-      p.hairTypes.some((ht) => ht.toLowerCase().includes(String(hairType).toLowerCase()))
-    );
-  }
-
-  res.json(filtered);
-});
-
-// Get Single Product
-app.get('/api/products/:id', (req, res) => {
-  const product = PRODUCTS.find((p) => p.id === req.params.id);
-  if (!product) {
-    return res.status(404).json({ error: 'Product not found' });
-  }
-  res.json(product);
-});
-
-// Get Journal Articles
-app.get('/api/journal', (req, res) => {
-  res.json(JOURNAL_ARTICLES);
-});
-
-// Get Reviews
-app.get('/api/reviews', (req, res) => {
-  res.json(REVIEWS);
-});
-
-// Interactive Hair Ritual Quiz AI Consultation
-app.post('/api/quiz/consultation', async (req, res) => {
-  const { hairType, hairGoals, scalpCondition, texture, protectiveStyle } = req.body;
-
+// Contact Form Dispatch Endpoint
+app.post('/api/contact', (req, res) => {
   try {
-    const ai = getAIClient();
-    if (ai) {
-      const prompt = `You are Safenia's Chief Botanical Trichologist for Safenia Luxury Oils ("Nature's Care for Every Crown").
-A luxury client has submitted their Hair Ritual Quiz:
-- Hair Type: ${hairType}
-- Hair Texture: ${texture}
-- Hair Goals: ${Array.isArray(hairGoals) ? hairGoals.join(', ') : hairGoals}
-- Scalp Condition: ${scalpCondition}
-- Current Styling / Protective Style: ${protectiveStyle}
+    const { name, email, subject, message } = req.body || {};
 
-Provide a personalized luxury crown hair care ceremony prescription in json format with:
-1. customAdvice: A 2-3 sentence personalized editorial analysis on their scalp microbiome and growth potential.
-2. keyBotanicalRecommendations: An array of 3 key plant ingredients they should prioritize.
-3. routineSteps: An array of 4 step-by-step ceremony instructions (e.g. Step 1: Pre-Wash Scalp Stimulation, Step 2: Wash Day Seal, etc.).
-Answer ONLY in clean valid JSON without markdown tags or code blocks.`;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
-      });
-
-      const responseText = response.text || '';
-      const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-      
-      try {
-        const parsed = JSON.parse(cleanJson);
-        return res.json({
-          success: true,
-          consultation: parsed,
-          aiPowered: true,
-        });
-      } catch {
-        // fallback if parsing fails
-      }
+    if (!name || typeof name !== 'string' || name.trim().length < 2) {
+      return res.status(400).json({ error: 'Please provide a valid full name.' });
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || typeof email !== 'string' || !emailRegex.test(email.trim())) {
+      return res.status(400).json({ error: 'Please provide a valid email address.' });
+    }
+
+    if (!message || typeof message !== 'string' || message.trim().length < 10) {
+      return res.status(400).json({ error: 'Please provide an inquiry message of at least 10 characters.' });
+    }
+
+    console.log(`[CONCIERGE INQUIRY] From: ${name.trim()} <${email.trim()}> | Subject: ${subject || 'General Inquiry'}`);
+    console.log(`Message: ${message.trim()}`);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Your inquiry has been received by our botanical concierge. We will respond to your crown inquiry within 24 business hours.',
+      timestamp: new Date().toISOString(),
+    });
   } catch (err) {
-    console.error('Gemini API quiz consultation error:', err);
+    console.error('Contact form submission error:', err);
+    return res.status(500).json({ error: 'Failed to process inquiry. Please try again or email us directly at safenialuxuryoils@gmail.com.' });
   }
+});
 
-  // Smart Fallback Recommendation Engine
-  const recommended = PRODUCTS.filter((p) => {
-    if (protectiveStyle?.toLowerCase().includes('braid') || protectiveStyle?.toLowerCase().includes('twist')) {
-      return p.collection === 'protective' || p.collection === 'scalp' || p.collection === 'growth';
-    }
-    if (hairType?.toLowerCase().includes('loc')) {
-      return p.collection === 'locs' || p.collection === 'scalp';
-    }
-    return p.isBestSeller || p.collection === 'growth';
-  });
+// Newsletter Subscription Endpoint
+app.post('/api/newsletter', (req, res) => {
+  try {
+    const { email } = req.body || {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  return res.json({
-    success: true,
-    aiPowered: false,
-    consultation: {
-      customAdvice: `Based on your ${hairType} crown profile and goal of ${Array.isArray(hairGoals) ? hairGoals.join(' & ') : 'optimal hair health'}, your scalp will thrive with high-purity cold-pressed botanical lipids like Rosemary, Black Seed, and Golden Jojoba.`,
-      keyBotanicalRecommendations: ['Rosemary Leaf Oil', 'Egyptian Black Seed', 'Jamaican Castor'],
-      routineSteps: [
-        { step: 1, title: 'Scalp Awakening', instruction: 'Apply 3-4 drops along your grid parts and massage gently for 3 minutes.' },
-        { step: 2, title: 'Follicle Nourishment', instruction: 'Apply Crown Growth Elixir to ends and edges before bed.' },
-        { step: 3, title: 'Protective Shield', instruction: 'Seal coils or locs with lightweight Jojoba/Kalahari Melon oil.' },
-        { step: 4, title: 'Weekly Deep Ceremony', instruction: 'Perform a warm oil scalp wrap once per week for maximum absorption.' },
-      ],
-      recommendedProducts: recommended.slice(0, 3),
-    },
+    if (!email || typeof email !== 'string' || !emailRegex.test(email.trim())) {
+      return res.status(400).json({ error: 'Please provide a valid email address.' });
+    }
+
+    console.log(`[NEWSLETTER SUBSCRIPTION] New Safenia Circle member: ${email.trim()}`);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Welcome to the Safenia Circle. You will receive private botanical updates and micro-batch releases.',
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error('Newsletter error:', err);
+    return res.status(500).json({ error: 'Failed to join circle. Please try again.' });
+  }
+});
+
+// Shopify Storefront Integration Status
+app.get('/api/shopify/status', (req, res) => {
+  const domain = process.env.VITE_SHOPIFY_STORE_DOMAIN || process.env.SHOPIFY_STORE_DOMAIN || 'safenialuxuryoils.myshopify.com';
+  const hasToken = Boolean(process.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN || process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN);
+  
+  res.json({
+    configured: hasToken,
+    domain: domain.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+    apiVersion: '2024-07',
+    mode: hasToken ? 'live_shopify_storefront' : 'placeholder_shopify_ready',
+    instruction: hasToken
+      ? 'Shopify Storefront API credentials are active and serving live catalog data.'
+      : 'Placeholder configuration active. Add VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN to connect live Shopify inventory.',
   });
 });
 
-// Order Creation Simulation Endpoint
-app.post('/api/orders/create', (req, res) => {
-  const { items, shippingAddress, paymentMethod, total, currency } = req.body;
-
-  const orderId = `SAF-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-  const trackingNumber = `DHL-EXPRESS-${Math.floor(100000000 + Math.random() * 900000000)}`;
-
-  res.json({
-    success: true,
-    order: {
-      id: orderId,
-      date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-      status: 'Processing',
-      total: total || 130,
-      currency: currency || 'USD',
-      items: items || [],
-      trackingNumber,
-      courier: 'DHL Express Global Priority',
-      shippingAddress: shippingAddress || '123 Luxury Avenue, Beverly Hills, CA 90210',
-      paymentMethod: paymentMethod || 'Visa ending in 4242',
-      crownPointsEarned: Math.round((total || 130) * 10),
-    },
-  });
-});
-
-// Admin Dashboard Analytics API
-app.get('/api/admin/stats', (req, res) => {
-  res.json({
-    totalRevenueUSD: 148920.0,
-    totalOrdersThisMonth: 842,
-    activeSubscribers: 312,
-    averageRating: 4.94,
-    topSellingProducts: [
-      { name: 'Safenia Crown Growth Elixir', unitsSold: 1240, revenueUSD: 84320 },
-      { name: 'Safenia Royal Loc & Scalp Nectar', unitsSold: 810, revenueUSD: 50220 },
-      { name: 'Safenia Golden Crown Luxury Gift Set', unitsSold: 88, revenueUSD: 14520 },
-    ],
-    recentOrders: [
-      { id: 'SAF-2026-9812', customer: 'Lady Vivienne Thorne', city: 'London, UK', amount: '$130.00', status: 'Shipped' },
-      { id: 'SAF-2026-9811', customer: 'Fatima Al-Maktoum', city: 'Dubai, UAE', amount: '$185.00', status: 'Delivered' },
-      { id: 'SAF-2026-9810', customer: 'Zuri Ndegwa', city: 'Nairobi, Kenya', amount: '$68.00', status: 'Processing' },
-    ],
-  });
+// Fallback products endpoint for initial hydration
+app.get('/api/products', (req, res) => {
+  res.json(DEFAULT_PRODUCTS);
 });
 
 // ================= VITE MIDDLEWARE SETUP ================= //
@@ -205,7 +129,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`✨ Safenia Luxury Oils Server running at http://0.0.0.0:${PORT}`);
+    console.log(`✨ Safenia Luxury Oils Server running on http://0.0.0.0:${PORT}`);
   });
 }
 

@@ -1,47 +1,97 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
+import { FeaturedProducts } from './components/FeaturedProducts';
 import { WhySafenia } from './components/WhySafenia';
 import { AboutTeaser } from './components/AboutTeaser';
 import { ShopByNeed } from './components/ShopByNeed';
-import { MerchandiseSection } from './components/MerchandiseSection';
-import { FeaturedProducts } from './components/FeaturedProducts';
-import { TrackOrderTeaser } from './components/TrackOrderTeaser';
+import { SafeniaRitualSection } from './components/SafeniaRitualSection';
+import { NewsletterSection } from './components/NewsletterSection';
+import { Footer } from './components/Footer';
 
 import { ShopView } from './components/ShopView';
 import { AboutView } from './components/AboutView';
+import { RitualView } from './components/RitualView';
+import { JournalView } from './components/JournalView';
 import { TrackOrderView } from './components/TrackOrderView';
 import { ContactView } from './components/ContactView';
+import { NotFoundView } from './components/NotFoundView';
 
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { CartDrawer } from './components/CartDrawer';
-import { AccountModal } from './components/AccountModal';
-import { ShopifySettingsModal } from './components/ShopifySettingsModal';
-import { Footer } from './components/Footer';
+import { SearchModal } from './components/SearchModal';
+import { FaqModal } from './components/FaqModal';
+import { LiveBackground } from './components/LiveBackground';
 
-import { CURRENCIES } from './data/currencies';
-import { PRODUCTS } from './data/mockData';
-import { Product, CartItem, Currency, ShopifyConfig, PageView, ProductVariant } from './types';
-import { getStoredShopifyConfig } from './utils/shopify';
+import { Product, CartLineItem, PageView, ProductVariant, ShopifyCart } from './types';
+import { DEFAULT_PRODUCTS } from './data/defaultProducts';
+import {
+  fetchShopifyProducts,
+  fetchShopifyCart,
+  addToShopifyCart,
+  updateShopifyCartLine,
+  removeShopifyCartLines,
+  buildShopifyCartPermalink,
+} from './utils/shopify';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageView>('home');
-  const [shopifyConfig, setShopifyConfig] = useState<ShopifyConfig>(getStoredShopifyConfig());
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(CURRENCIES[0]);
-  const [wishlistIds, setWishlistIds] = useState<string[]>([PRODUCTS[0].id]);
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      product: PRODUCTS[0],
-      quantity: 1,
-    },
-  ]);
+  const [products, setProducts] = useState<Product[]>(DEFAULT_PRODUCTS);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
 
-  // Modal & Drawer State
+  // Cart state
+  const [cartLines, setCartLines] = useState<CartLineItem[]>([]);
+  const [cartCheckoutUrl, setCartCheckoutUrl] = useState<string | undefined>(undefined);
+  const [isCartLoading, setIsCartLoading] = useState(false);
+
+  // Modals & Navigation state
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isAccountOpen, setIsAccountOpen] = useState(false);
-  const [isShopifySettingsOpen, setIsShopifySettingsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFaqOpen, setIsFaqOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [shopInitialCategory, setShopInitialCategory] = useState<string>('all');
+
+  // Load products from Shopify Storefront API on mount
+  useEffect(() => {
+    let isMounted = true;
+    async function loadProducts() {
+      try {
+        setIsLoadingProducts(true);
+        const shopifyProducts = await fetchShopifyProducts();
+        if (isMounted && shopifyProducts && shopifyProducts.length > 0) {
+          setProducts(shopifyProducts);
+        }
+      } catch (err) {
+        console.warn('Using default botanical catalog fallback', err);
+      } finally {
+        if (isMounted) {
+          setIsLoadingProducts(false);
+        }
+      }
+    }
+    loadProducts();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Restore cart on mount if one exists in localStorage
+  useEffect(() => {
+    async function loadCart() {
+      try {
+        const existingCart = await fetchShopifyCart();
+        if (existingCart) {
+          setCartCheckoutUrl(existingCart.checkoutUrl);
+          if (existingCart.lines && existingCart.lines.length > 0) {
+            setCartLines(existingCart.lines);
+          }
+        }
+      } catch (err) {
+        console.warn('Could not restore previous Shopify cart session', err);
+      }
+    }
+    loadCart();
+  }, []);
 
   const handleNavigate = (page: PageView, category?: string) => {
     if (category) {
@@ -53,125 +103,222 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Cart operations
-  const handleAddToCart = (
+  // Add to Bag
+  const handleAddToCart = async (
     product: Product,
     quantity = 1,
     selectedVariant?: ProductVariant
   ) => {
-    setCartItems((prev) => {
-      const existingIndex = prev.findIndex(
-        (item) =>
-          item.product.id === product.id &&
-          item.selectedVariant?.id === selectedVariant?.id
-      );
+    const variant = selectedVariant || product.variants[0] || {
+      id: product.id,
+      title: 'Standard',
+      price: product.price,
+      currencyCode: product.currencyCode,
+      availableForSale: true,
+    };
 
+    // Update local cart state immediately for instantaneous UX
+    setCartLines((prev) => {
+      const existingIndex = prev.findIndex((item) => item.variantId === variant.id);
       if (existingIndex > -1) {
         const updated = [...prev];
-        updated[existingIndex].quantity += quantity;
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          quantity: updated[existingIndex].quantity + quantity,
+        };
         return updated;
       }
-
       return [
         ...prev,
         {
-          product,
+          id: `local_${Date.now()}_${Math.random()}`,
+          variantId: variant.id,
           quantity,
-          selectedVariant,
+          product,
+          selectedVariant: variant,
         },
       ];
     });
+
     setIsCartOpen(true);
+
+    // Sync with Shopify Storefront Cart API
+    try {
+      setIsCartLoading(true);
+      const updatedCart = await addToShopifyCart(variant.id, quantity);
+      if (updatedCart?.checkoutUrl) {
+        setCartCheckoutUrl(updatedCart.checkoutUrl);
+      }
+      if (updatedCart?.lines) {
+        setCartLines(updatedCart.lines);
+      }
+    } catch (e) {
+      console.warn('Shopify Cart API sync error:', e);
+    } finally {
+      setIsCartLoading(false);
+    }
   };
 
-  const handleUpdateQuantity = (productId: string, quantity: number) => {
+  const handleUpdateQuantity = async (lineId: string, quantity: number) => {
     if (quantity <= 0) {
-      handleRemoveItem(productId);
+      handleRemoveItem(lineId);
       return;
     }
-    setCartItems((prev) =>
-      prev.map((item) => (item.product.id === productId ? { ...item, quantity } : item))
+
+    setCartLines((prev) =>
+      prev.map((item) => (item.id === lineId ? { ...item, quantity } : item))
     );
+
+    try {
+      setIsCartLoading(true);
+      const updatedCart = await updateShopifyCartLine(lineId, quantity);
+      if (updatedCart?.lines) {
+        setCartLines(updatedCart.lines);
+      }
+    } catch (e) {
+      console.warn('Shopify Cart update error:', e);
+    } finally {
+      setIsCartLoading(false);
+    }
   };
 
-  const handleRemoveItem = (productId: string) => {
-    setCartItems((prev) => prev.filter((item) => item.product.id !== productId));
+  const handleRemoveItem = async (lineId: string) => {
+    setCartLines((prev) => prev.filter((item) => item.id !== lineId));
+
+    try {
+      setIsCartLoading(true);
+      const updatedCart = await removeShopifyCartLines([lineId]);
+      if (updatedCart?.lines) {
+        setCartLines(updatedCart.lines);
+      }
+    } catch (e) {
+      console.warn('Shopify Cart remove line error:', e);
+    } finally {
+      setIsCartLoading(false);
+    }
   };
 
-  const handleToggleWishlist = (product: Product) => {
-    setWishlistIds((prev) =>
-      prev.includes(product.id) ? prev.filter((id) => id !== product.id) : [...prev, product.id]
-    );
+  const handleCheckout = () => {
+    if (cartCheckoutUrl) {
+      window.location.href = cartCheckoutUrl;
+    } else {
+      const items = cartLines.map((l) => ({
+        variantId: l.variantId,
+        quantity: l.quantity,
+      }));
+      window.location.href = buildShopifyCartPermalink(items);
+    }
+  };
+
+  const totalCartCount = cartLines.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Construct structured ShopifyCart model
+  const subtotalAmount = cartLines.reduce(
+    (sum, item) => sum + item.selectedVariant.price * item.quantity,
+    0
+  );
+  const currentCurrency = cartLines[0]?.selectedVariant.currencyCode || 'USD';
+
+  const shopifyCartObject: ShopifyCart = {
+    id: 'active_cart',
+    checkoutUrl:
+      cartCheckoutUrl ||
+      buildShopifyCartPermalink(
+        cartLines.map((l) => ({ variantId: l.variantId, quantity: l.quantity }))
+      ),
+    totalQuantity: totalCartCount,
+    lines: cartLines,
+    cost: {
+      subtotalAmount: {
+        amount: String(subtotalAmount),
+        currencyCode: currentCurrency,
+      },
+      totalAmount: {
+        amount: String(subtotalAmount),
+        currencyCode: currentCurrency,
+      },
+    },
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F8F5F0] relative font-sans selection:bg-[#BF914A] selection:text-black antialiased">
-      {/* Navigation Header */}
+    <div className="min-h-screen bg-[#0B0908] text-[#F5F0E6] flex flex-col font-sans-body selection:bg-[#D4AF37] selection:text-[#0B0908] antialiased relative">
+      {/* 0. Live Botanical Atmosphere Canvas */}
+      <LiveBackground />
+
+      {/* 1. Fixed Editorial Header */}
       <Header
         currentPage={currentPage}
-        cartCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-        wishlistCount={wishlistIds.length}
-        selectedCurrency={selectedCurrency}
-        shopifyConfig={shopifyConfig}
+        cartCount={totalCartCount}
         onNavigate={handleNavigate}
-        onSelectCurrency={setSelectedCurrency}
+        onOpenSearch={() => setIsSearchOpen(true)}
         onOpenCart={() => setIsCartOpen(true)}
-        onOpenAccount={() => setIsAccountOpen(true)}
-        onOpenShopifyConfig={() => setIsShopifySettingsOpen(true)}
       />
 
-      {/* Main Dynamic View Controller */}
-      <main className="min-h-[70vh]">
+      {/* 2. Dynamic Main Content Canvas */}
+      <main className="flex-1 w-full">
         {currentPage === 'home' && (
-          <div className="space-y-0 animate-fadeIn">
+          <div className="animate-fadeIn">
+            {/* Section 1: Hero Section */}
             <HeroSection
               onShopClick={() => handleNavigate('shop')}
               onAboutClick={() => handleNavigate('about')}
             />
-            <WhySafenia />
+
+            {/* Section 2: Magazine Philosophy / Heritage Teaser */}
             <AboutTeaser onAboutClick={() => handleNavigate('about')} />
+
+            {/* Section 3: Shop by Hair Journey (4 Cards + 3 Sub-Collections) */}
             <ShopByNeed onSelectCategory={(cat) => handleNavigate('shop', cat)} />
+
+            {/* Section 4: Featured Formulations (All 3 Botanical Oils) */}
             <FeaturedProducts
-              products={PRODUCTS}
-              selectedCurrency={selectedCurrency}
+              products={products}
+              isLoading={isLoadingProducts}
               onSelectProduct={setSelectedProduct}
-              onAddToCart={handleAddToCart}
+              onAddToCart={(p) => handleAddToCart(p, 1)}
               onViewAll={() => handleNavigate('shop')}
             />
-            <TrackOrderTeaser
-              onTrackClick={() => handleNavigate('track')}
-            />
+
+            {/* Section 5: Documented 16-Week Before/After Transformation Slider */}
+            <SafeniaRitualSection onShopClick={() => handleNavigate('shop')} />
+
+            {/* Section 7: Editorial Newsletter & Inner Circle */}
+            <NewsletterSection />
           </div>
         )}
 
         {currentPage === 'shop' && (
           <div className="animate-fadeIn">
             <ShopView
-              products={PRODUCTS}
-              selectedCurrency={selectedCurrency}
-              shopifyConfig={shopifyConfig}
+              products={products}
               initialCategory={shopInitialCategory}
               onSelectProduct={setSelectedProduct}
-              onAddToCart={handleAddToCart}
+              onAddToCart={(p) => handleAddToCart(p, 1)}
             />
           </div>
         )}
 
         {currentPage === 'about' && (
           <div className="animate-fadeIn">
-            <AboutView
-              onShopClick={() => handleNavigate('shop')}
-              onContactClick={() => handleNavigate('contact')}
-            />
+            <AboutView onShopClick={() => handleNavigate('shop')} />
+          </div>
+        )}
+
+        {(currentPage === 'care' || currentPage === 'ritual') && (
+          <div className="animate-fadeIn">
+            <RitualView onShopClick={() => handleNavigate('shop')} />
+          </div>
+        )}
+
+        {currentPage === 'journal' && (
+          <div className="animate-fadeIn">
+            <JournalView onShopClick={() => handleNavigate('shop')} />
           </div>
         )}
 
         {currentPage === 'track' && (
           <div className="animate-fadeIn">
-            <TrackOrderView
-              shopifyConfig={shopifyConfig}
-              onContactClick={() => handleNavigate('contact')}
-            />
+            <TrackOrderView />
           </div>
         )}
 
@@ -180,59 +327,58 @@ export default function App() {
             <ContactView />
           </div>
         )}
+
+        {currentPage === '404' && (
+          <div className="animate-fadeIn">
+            <NotFoundView
+              onNavigateHome={() => handleNavigate('home')}
+              onNavigateShop={() => handleNavigate('shop')}
+            />
+          </div>
+        )}
       </main>
 
-      {/* Footer */}
+      {/* 3. Luxury Editorial Botanical Footer */}
       <Footer
         onNavigate={handleNavigate}
-        onOpenShopifyConfig={() => setIsShopifySettingsOpen(true)}
       />
 
-      {/* Modals & Overlays */}
+      {/* 4. Product Detail Modal */}
       <ProductDetailModal
         product={selectedProduct}
-        selectedCurrency={selectedCurrency}
-        shopifyConfig={shopifyConfig}
-        isWishlisted={selectedProduct ? wishlistIds.includes(selectedProduct.id) : false}
         onClose={() => setSelectedProduct(null)}
-        onAddToCart={(prod, qty, variant) => {
-          handleAddToCart(prod, qty, variant);
-          setSelectedProduct(null);
-        }}
-        onToggleWishlist={handleToggleWishlist}
+        onAddToCart={handleAddToCart}
       />
 
+      {/* 5. Real Shopify Connected Slide-Out Cart Drawer */}
       <CartDrawer
         isOpen={isCartOpen}
-        cartItems={cartItems}
-        selectedCurrency={selectedCurrency}
-        shopifyConfig={shopifyConfig}
+        cart={shopifyCartObject}
+        isLoading={isCartLoading}
         onClose={() => setIsCartOpen(false)}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
-        onProceedToCheckout={() => {}}
-        onOpenShopifyConfig={() => {
+        onCheckout={handleCheckout}
+        onContinueShopping={() => {
           setIsCartOpen(false);
-          setIsShopifySettingsOpen(true);
+          handleNavigate('shop');
         }}
       />
 
-      <AccountModal
-        isOpen={isAccountOpen}
-        shopifyConfig={shopifyConfig}
-        onClose={() => setIsAccountOpen(false)}
-        onOpenShopifyConfig={() => {
-          setIsAccountOpen(false);
-          setIsShopifySettingsOpen(true);
-        }}
+      {/* 6. Instant Search Modal */}
+      <SearchModal
+        isOpen={isSearchOpen}
+        products={products}
+        onClose={() => setIsSearchOpen(false)}
+        onSelectProduct={setSelectedProduct}
       />
 
-      <ShopifySettingsModal
-        isOpen={isShopifySettingsOpen}
-        config={shopifyConfig}
-        onClose={() => setIsShopifySettingsOpen(false)}
-        onUpdateConfig={setShopifyConfig}
+      {/* 7. Botanical FAQ Modal */}
+      <FaqModal
+        isOpen={isFaqOpen}
+        onClose={() => setIsFaqOpen(false)}
       />
     </div>
   );
 }
+

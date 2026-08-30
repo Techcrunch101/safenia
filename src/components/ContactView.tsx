@@ -1,273 +1,231 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, ChevronDown, ChevronUp, MessageSquare, Clock } from 'lucide-react';
-import { SafeniaLogo } from './SafeniaLogo';
+import { Mail, CheckCircle2, Send, Clock, Sparkles, AlertCircle, Loader2 } from 'lucide-react';
 
 export const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
+    subject: 'General Inquiry',
     message: '',
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-    setIsSubmitted(true);
+    setErrorMessage(null);
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setErrorMessage('Please complete all required fields.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSubmitted(true);
+      } else {
+        setErrorMessage(data.error || 'Unable to deliver message at this moment. Please email us directly at safenialuxuryoils@gmail.com.');
+      }
+    } catch (err) {
+      setErrorMessage('Network connection error. Please try again or email us directly at safenialuxuryoils@gmail.com.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const faqs = [
-    {
-      question: 'How do I choose the right Safenia oil for my hair type?',
-      answer:
-        'If you are seeking length retention and thickness, we recommend our Crown Growth Elixir. For dry curls, locs, and coils needing weightless hydration, choose Botanical Moisture Nectar. For tight scalp tension, itchiness, or protective styles (braids/locs), the Botanical Scalp Therapy Drops provide immediate cooling relief.',
-    },
-    {
-      question: 'Are Safenia oils safe for starter locs and sisterlocs?',
-      answer:
-        'Yes, absolutely! We formulated our Royal Loc Nectar specifically with cold-pressed Golden Jojoba and Kalahari Melon Seed Oil, which have near-zero wax ester residue and will never leave buildup or attract lint into your locs.',
-    },
-    {
-      question: 'How long will one bottle last?',
-      answer:
-        'Because our formulas are 100% pure concentrated botanical oils with no fillers or diluted water bases, a 50ml bottle typically lasts 6 to 8 weeks when applied 3 to 4 times per week.',
-    },
-    {
-      question: 'How is checkout and shipping handled?',
-      answer:
-        'All checkouts, payments (Credit Cards, Apple Pay, PayPal, M-Pesa), and worldwide shipping are securely handled by Shopify. Once your order is placed, you receive instant email and SMS tracking updates.',
-    },
-    {
-      question: 'What is your return policy?',
-      answer:
-        'We take immense pride in the craftsmanship of our oils. If you experience any issues with your shipment, please contact us within 14 days of delivery at safenialuxuryoils@gmail.com and our team will gladly resolve it.',
-    },
-  ];
-
   return (
-    <div className="bg-[#050505] text-white min-h-screen">
-      {/* Header Banner */}
-      <section className="relative py-20 overflow-hidden border-b border-[#BF914A]/20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4">
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#111114] border border-[#BF914A]/40 text-[#D8B26F] text-xs font-bold uppercase tracking-[0.25em]">
-            <Mail className="w-3.5 h-3.5 text-[#BF914A]" />
-            <span>Customer Care</span>
+    <div className="bg-[#0B0908] text-[#F5F0E6] min-h-screen pt-28 pb-32">
+      {/* Editorial Header */}
+      <section className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 border-b border-[#D4AF37]/20 gap-6">
+          <div className="text-left space-y-3">
+            <span className="text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.34em] font-semibold text-[#D4AF37] block">
+              CUSTOMER CONCIERGE
+            </span>
+            <h1 className="text-4xl sm:text-6xl font-serif-luxury font-normal text-[#F5F0E6] tracking-tight">
+              LET’S TALK
+            </h1>
           </div>
-
-          <h1 className="text-3xl sm:text-5xl font-serif-luxury font-bold text-white">
-            Get In Touch
-          </h1>
-
-          <p className="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Have questions about our botanical formulations, order tracking, or wholesale inquiries? We are here to serve your crown.
-          </p>
+          <div className="text-left md:text-right space-y-1">
+            <p className="text-xs sm:text-sm text-[#B3ACA0] font-sans-body font-light">For inquiries, wholesale, or crown care advice:</p>
+            <a
+              href="mailto:safenialuxuryoils@gmail.com"
+              className="text-sm font-sans-body text-[#D4AF37] hover:text-[#F5F0E6] font-semibold transition-colors inline-block tracking-wide"
+            >
+              safenialuxuryoils@gmail.com
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Main Contact Grid */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Left Column: Contact Details */}
+      {/* Main Content Area */}
+      <section className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Left Column: Direct Info */}
           <div className="lg:col-span-5 space-y-8 text-left">
-            <div className="space-y-3">
-              <span className="text-[11px] uppercase tracking-[0.25em] text-[#D8B26F] font-bold">
-                Direct Contact
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-serif-luxury font-bold text-white">
-                We’d Love to Hear From You
-              </h2>
-              <p className="text-zinc-400 text-sm leading-relaxed">
-                Whether you need botanical routine guidance or want to check on a custom gift order, reach out directly.
+            <div className="border border-[#D4AF37]/20 p-8 space-y-6 bg-[#14110E]">
+              <h3 className="font-serif-luxury text-2xl text-[#F5F0E6]">
+                Safenia Concierge
+              </h3>
+
+              <div className="space-y-4 text-xs font-sans-body text-[#B3ACA0] font-light">
+                <div className="flex items-start space-x-3">
+                  <Mail className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold text-[#F5F0E6] block">Direct Email</span>
+                    <a href="mailto:safenialuxuryoils@gmail.com" className="hover:text-[#D4AF37] transition-colors">
+                      safenialuxuryoils@gmail.com
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <Clock className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold text-[#F5F0E6] block">Concierge Hours</span>
+                    <span>Monday – Friday: 9:00 AM – 5:00 PM EST</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-8 border border-[#D4AF37]/20 space-y-3 text-left bg-[#14110E]">
+              <div className="flex items-center space-x-2 text-[#D4AF37]">
+                <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                <h4 className="font-serif-luxury text-lg text-[#F5F0E6]">
+                  Bespoke Formulation Advice
+                </h4>
+              </div>
+              <p className="text-xs text-[#B3ACA0] font-sans-body font-light leading-relaxed">
+                Unsure which botanical formulation suits your scalp density or loc care ritual? Detail your crown's current routine in your message for tailored guidance from our specialists.
               </p>
-            </div>
-
-            {/* Contact Cards */}
-            <div className="space-y-4">
-              <a
-                href="mailto:safenialuxuryoils@gmail.com"
-                className="p-5 rounded-2xl bg-[#0c0c0f] border border-zinc-800 hover:border-[#BF914A]/60 transition-all flex items-center space-x-4 group block cursor-pointer"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#BF914A]/10 border border-[#BF914A]/30 flex items-center justify-center text-[#D8B26F] group-hover:bg-[#BF914A] group-hover:text-black transition-colors shrink-0">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">Email Us</div>
-                  <div className="text-white font-medium text-sm group-hover:text-[#D8B26F] transition-colors">
-                    safenialuxuryoils@gmail.com
-                  </div>
-                </div>
-              </a>
-
-              <div className="p-5 rounded-2xl bg-[#0c0c0f] border border-zinc-800 flex items-center space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-[#BF914A]/10 border border-[#BF914A]/30 flex items-center justify-center text-[#D8B26F] shrink-0">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">Response Hours</div>
-                  <div className="text-white font-medium text-sm">
-                    Monday – Saturday: 9:00 AM – 6:00 PM
-                  </div>
-                  <div className="text-xs text-zinc-400">Average response time under 12 hours</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Slogan Pill */}
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-[#141418] to-[#0a0a0d] border-l-2 border-[#BF914A]">
-              <div className="text-xs text-[#D8B26F] font-bold uppercase tracking-widest">
-                Safenia Luxury Oils
-              </div>
-              <div className="text-sm font-serif-luxury text-zinc-300 italic mt-1">
-                “Nature’s Care for Every Crown”
-              </div>
             </div>
           </div>
 
           {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7">
-            <div className="bg-[#0c0c0f] border border-zinc-800 rounded-3xl p-8 sm:p-10 shadow-2xl text-left">
-              {isSubmitted ? (
-                <div className="py-12 text-center space-y-4 animate-fadeIn">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+          <div className="lg:col-span-7 border border-[#D4AF37]/20 p-8 sm:p-12 text-left bg-[#14110E]">
+            {submitted ? (
+              <div className="text-center py-16 space-y-4">
+                <CheckCircle2 className="w-10 h-10 text-[#D4AF37] mx-auto animate-fadeIn" />
+                <h3 className="font-serif-luxury text-3xl text-[#F5F0E6]">
+                  Inquiry Received
+                </h3>
+                <p className="text-sm text-[#B3ACA0] font-sans-body max-w-md mx-auto font-light leading-relaxed">
+                  Thank you for connecting with Safenia Luxury Oils. Our concierge has logged your message and will respond to <span className="text-[#D4AF37] font-medium">{formData.email}</span> within 24 business hours.
+                </p>
+                <button
+                  onClick={() => {
+                    setSubmitted(false);
+                    setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
+                  }}
+                  className="px-6 py-3 bg-[#D4AF37] text-[#0B0908] text-xs font-sans-body font-semibold uppercase tracking-[0.22em] cursor-pointer hover:bg-[#F3E5AB] transition-colors"
+                >
+                  SEND ANOTHER MESSAGE
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {errorMessage && (
+                  <div className="p-4 border border-red-500/40 bg-red-950/30 text-red-300 text-xs font-sans-body flex items-start space-x-3">
+                    <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                    <span>{errorMessage}</span>
                   </div>
-                  <h3 className="text-2xl font-serif-luxury font-bold text-white">
-                    Message Received
-                  </h3>
-                  <p className="text-zinc-400 text-sm max-w-md mx-auto leading-relaxed">
-                    Thank you for reaching out to Safenia Luxury Oils. Our botanical concierge will reply to{' '}
-                    <span className="text-[#D8B26F]">{formData.email}</span> shortly.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setFormData({ name: '', email: '', subject: '', message: '' });
-                    }}
-                    className="mt-4 px-6 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold uppercase tracking-wider rounded-xl transition-colors cursor-pointer"
-                  >
-                    Send Another Note
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <h3 className="text-xl font-serif-luxury font-bold text-white mb-2">
-                    Send Us a Message
-                  </h3>
+                )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-2">
-                        Your Name *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="e.g. Lady Vivienne"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 bg-black/60 border border-zinc-700 focus:border-[#BF914A] rounded-xl text-white text-sm placeholder-zinc-500 focus:outline-none transition-colors"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-2">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="name@example.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-3 bg-black/60 border border-zinc-700 focus:border-[#BF914A] rounded-xl text-white text-sm placeholder-zinc-500 focus:outline-none transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-2">
-                      Subject
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.2em] font-semibold text-[#B3ACA0]">
+                      YOUR NAME *
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Product Inquiry / Order Question"
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 bg-black/60 border border-zinc-700 focus:border-[#BF914A] rounded-xl text-white text-sm placeholder-zinc-500 focus:outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-2">
-                      Your Message *
-                    </label>
-                    <textarea
-                      rows={5}
                       required
-                      placeholder="How can we assist you and your crown today?"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-3 bg-black/60 border border-zinc-700 focus:border-[#BF914A] rounded-xl text-white text-sm placeholder-zinc-500 focus:outline-none transition-colors resize-none"
+                      placeholder="Your full name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 bg-[#0B0908] border border-[#D4AF37]/30 focus:border-[#D4AF37] text-sm font-sans-body text-[#F5F0E6] placeholder-[#7A746B] focus:outline-none transition-colors"
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="w-full py-4 bg-gradient-to-r from-[#75410A] via-[#BF914A] to-[#D8B26F] hover:from-[#9E6924] hover:to-[#F3E5C8] text-black font-bold text-xs uppercase tracking-[0.2em] rounded-xl transition-all shadow-xl flex items-center justify-center space-x-2 cursor-pointer"
-                  >
-                    <Send className="w-4 h-4" />
-                    <span>Send Message</span>
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Frequently Asked Questions */}
-      <section className="py-20 bg-[#08080b] border-t border-[#BF914A]/20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 space-y-2">
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#D8B26F] font-bold">
-              Got Questions?
-            </span>
-            <h2 className="text-3xl font-serif-luxury font-bold text-white">
-              Frequently Asked Questions
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  className="bg-[#0c0c0f] border border-zinc-800 rounded-2xl overflow-hidden text-left"
-                >
-                  <button
-                    onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full px-6 py-4 flex items-center justify-between text-left hover:text-[#D8B26F] transition-colors cursor-pointer"
-                  >
-                    <span className="font-serif-luxury font-semibold text-white text-sm sm:text-base">
-                      {faq.question}
-                    </span>
-                    {isOpen ? (
-                      <ChevronUp className="w-4 h-4 text-[#BF914A] shrink-0 ml-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4 text-zinc-400 shrink-0 ml-4" />
-                    )}
-                  </button>
-                  {isOpen && (
-                    <div className="px-6 pb-5 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-zinc-900 pt-3 animate-fadeIn">
-                      {faq.answer}
-                    </div>
-                  )}
+                  <div className="space-y-2">
+                    <label className="block text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.2em] font-semibold text-[#B3ACA0]">
+                      EMAIL ADDRESS *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="you@example.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 bg-[#0B0908] border border-[#D4AF37]/30 focus:border-[#D4AF37] text-sm font-sans-body text-[#F5F0E6] placeholder-[#7A746B] focus:outline-none transition-colors"
+                    />
+                  </div>
                 </div>
-              );
-            })}
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.2em] font-semibold text-[#B3ACA0]">
+                    TOPIC
+                  </label>
+                  <select
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 bg-[#0B0908] border border-[#D4AF37]/30 focus:border-[#D4AF37] text-sm font-sans-body text-[#F5F0E6] focus:outline-none cursor-pointer transition-colors"
+                  >
+                    <option value="General Inquiry" className="bg-[#0B0908] text-[#F5F0E6]">General Inquiry</option>
+                    <option value="Product Recommendation" className="bg-[#0B0908] text-[#F5F0E6]">Hair & Scalp Care Recommendation</option>
+                    <option value="Order Support" className="bg-[#0B0908] text-[#F5F0E6]">Shopify Order Support</option>
+                    <option value="Wholesale" className="bg-[#0B0908] text-[#F5F0E6]">Wholesale & Partnership</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] sm:text-[11px] font-sans-body uppercase tracking-[0.2em] font-semibold text-[#B3ACA0]">
+                    MESSAGE *
+                  </label>
+                  <textarea
+                    rows={4}
+                    required
+                    placeholder="How may our concierge assist your crown today?"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 bg-[#0B0908] border border-[#D4AF37]/30 focus:border-[#D4AF37] text-sm font-sans-body text-[#F5F0E6] placeholder-[#7A746B] focus:outline-none resize-none transition-colors"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#0B0908] font-semibold text-xs font-sans-body uppercase tracking-[0.24em] shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#0B0908]" />
+                      <span>TRANSMITTING INQUIRY...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-3.5 h-3.5 text-[#0B0908]" />
+                      <span>SUBMIT INQUIRY</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>

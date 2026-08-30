@@ -1,91 +1,189 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --bg-primary: #050505;
-    --bg-surface: #0c0c0d;
-    --bg-surface-hover: #141416;
-    --gold-deep: #75410A;
-    --gold-bronze: #9E6924;
-    --gold-classic: #BF914A;
-    --gold-light: #D8B26F;
-    --gold-champagne: #F3E5C8;
-    --warm-ivory: #F8F5F0;
+    --color-warm-ivory: #F5F0E6;
+    --color-deep-espresso: #0B0908;
+    --color-soft-charcoal: #14110E;
+    --color-botanical-olive: #9E8B60;
+    --color-deep-botanical: #12100D;
+    --color-soft-sage: #B79B6B;
+    --color-warm-sand: #24201B;
+    --color-muted-terracotta: #C99827;
+    --color-muted-champagne: #D4AF37;
+
+    --bg-primary: #0B0908;
+    --bg-dark: #050404;
+    --text-primary: #F5F0E6;
+    --text-muted: #B3ACA0;
+    --text-subtle: #8A8275;
+    --border-light: rgba(212, 175, 55, 0.16);
+    --border-dark: rgba(245, 240, 230, 0.08);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #0B0908;
+    color: #F5F0E6;
   }
 
   body {
-    background-color: #050505;
-    color: #F8F5F0;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #0B0908;
+    color: #F5F0E6;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
-    selection-background-color: #BF914A;
-    selection-color: #050505;
+    letter-spacing: -0.01em;
   }
 
-  h1, h2, h3, h4, .font-serif-luxury {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+  h1, h2, h3, h4, .font-serif-luxury, .font-display {
+    font-family: 'Cinzel', 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    letter-spacing: -0.015em;
+  }
+
+  .font-script-luxury {
+    font-family: 'Alex Brush', 'Playfair Display', cursive, serif;
+  }
+
+  .font-cinzel {
+    font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .font-sans-body {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .font-mono-spaced {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.28em;
   }
 }
 
-/* Luxury Custom Utilities */
-.bg-gold-gradient {
-  background: linear-gradient(135deg, #75410A 0%, #BF914A 50%, #D8B26F 100%);
-}
+/* Palette utility classes matching strict Botanical Quiet Luxury specification */
+.bg-warm-ivory { background-color: #F5F0E6; }
+.bg-deep-espresso { background-color: #17130F; }
+.bg-soft-charcoal { background-color: #24211D; }
+.bg-botanical-olive { background-color: #56604A; }
+.bg-deep-botanical { background-color: #30382D; }
+.bg-soft-sage { background-color: #A7AD98; }
+.bg-warm-sand { background-color: #D9CCB8; }
+.bg-muted-terracotta { background-color: #A66F55; }
+.bg-muted-champagne { background-color: #B79B6B; }
 
-.text-gold-gradient {
-  background: linear-gradient(135deg, #F3E5C8 0%, #D8B26F 40%, #BF914A 70%, #9E6924 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+.text-warm-ivory { color: #F5F0E6; }
+.text-deep-espresso { color: #17130F; }
+.text-soft-charcoal { color: #24211D; }
+.text-botanical-olive { color: #56604A; }
+.text-deep-botanical { color: #30382D; }
+.text-soft-sage { color: #A7AD98; }
+.text-warm-sand { color: #D9CCB8; }
+.text-muted-terracotta { color: #A66F55; }
+.text-muted-champagne { color: #B79B6B; }
 
-.text-gold-shimmer {
-  background: linear-gradient(90deg, #BF914A 0%, #F3E5C8 25%, #D8B26F 50%, #F3E5C8 75%, #BF914A 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 6s linear infinite;
-}
+.border-subtle-dark { border-color: rgba(245, 240, 230, 0.12); }
+.border-subtle-light { border-color: rgba(23, 19, 15, 0.08); }
 
-@keyframes shimmer {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
-.border-gold-subtle {
-  border-color: rgba(191, 145, 74, 0.25);
-}
-
-.border-gold-glow {
-  border-color: rgba(216, 178, 111, 0.5);
-  box-shadow: 0 0 15px rgba(191, 145, 74, 0.15);
-}
-
-.glass-dark {
-  background: rgba(12, 12, 13, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-.glass-gold {
-  background: rgba(15, 12, 8, 0.85);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(191, 145, 74, 0.2);
-}
-
-/* Custom Gold Scrollbar */
+/* Minimalist Editorial Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #F5F0E6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #75410A;
-  border-radius: 3px;
+  background: #D9CCB8;
+  border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #BF914A;
+  background: #56604A;
+}
+
+/* Editorial Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineExpand {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes imageReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-heroImage {
+  animation: imageReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-heroText {
+  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  opacity: 0;
+}
+
+.animate-heroSub {
+  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+  opacity: 0;
+}
+
+.animate-heroCta {
+  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+  opacity: 0;
+}
+
+/* Subtle Link Underline Hover Effect */
+.editorial-link {
+  position: relative;
+  display: inline-block;
+}
+.editorial-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.editorial-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 

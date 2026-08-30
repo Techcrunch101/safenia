@@ -1,0 +1,172 @@
+import { Product } from '../types';
+
+export const DEFAULT_PRODUCTS: Product[] = [
+  {
+    id: 'gid://shopify/Product/safenia-growth-oil',
+    handle: 'safenia-growth-oil',
+    title: 'Safenia Crown Growth Hair Oil',
+    description:
+      'A nutrient-dense botanical elixir infused with rosemary, amla, and cold-pressed castor oil. Specially crafted to nourish the scalp, support length retention, and leave hair soft, resilient, and thriving.',
+    price: 48,
+    currencyCode: 'USD',
+    featuredImage: '/src/assets/images/safenia_emerald_botanical_hero_1787295575998.jpg',
+    images: [
+      '/src/assets/images/safenia_emerald_botanical_hero_1787295575998.jpg',
+      '/src/assets/images/safenia_growth_afro_1787295304984.jpg',
+      '/src/assets/images/safenia_hero_bottle_1785599770184.jpg',
+    ],
+    category: 'growth',
+    availableForSale: true,
+    variants: [
+      {
+        id: 'gid://shopify/ProductVariant/growth-50ml',
+        title: '50ml (Standard Dropper)',
+        price: 48,
+        currencyCode: 'USD',
+        volume: '50ml',
+        availableForSale: true,
+      },
+      {
+        id: 'gid://shopify/ProductVariant/growth-100ml',
+        title: '100ml (Full Size)',
+        price: 78,
+        compareAtPrice: 96,
+        currencyCode: 'USD',
+        volume: '100ml',
+        availableForSale: true,
+      },
+    ],
+    benefits: [
+      'Nourishes the scalp and root zone with botanical antioxidants',
+      'Supports healthy length retention and reduces daily breakage',
+      'Infuses strands with natural shine without greasy residue',
+    ],
+    ingredients: [
+      'Cold-Pressed Jamaican Black Castor Oil (Ricinus Communis)',
+      'Organic Rosemary Leaf Infusion (Rosmarinus Officinalis)',
+      'Indian Gooseberry / Amla Extract (Phyllanthus Emblica)',
+      'Red Hibiscus Flower Botanical Infusion (Hibiscus Sabdariffa)',
+      'Golden Jojoba Seed Oil (Simmondsia Chinensis)',
+      'Natural Vitamin E (D-Alpha Tocopherol)',
+    ],
+    howToUse: [
+      'Section dry or damp hair and dispense 3–5 drops directly onto the scalp.',
+      'Massage gently with fingertips in circular motions for 2–3 minutes.',
+      'Smooth remaining oil down the length of strands to seal moisture.',
+      'Use 3–4 times weekly as part of your evening or post-wash care routine.',
+    ],
+    details: [
+      '100% pure cold-pressed botanical oils in 50ml UV-protected bottle',
+      'Free from silicones, parabens, mineral oil, and synthetic fragrances',
+      'Infused with raw amla, castor seeds, rosemary, and hibiscus',
+      'Ideal for natural hair, locs, protective styles, edges, and scalp massage',
+    ],
+  },
+  {
+    id: 'gid://shopify/Product/safenia-moisture-nectar',
+    handle: 'safenia-moisture-nectar',
+    title: 'Safenia Botanical Moisture Nectar',
+    description:
+      'A featherlight botanical oil blend featuring sweet almond, argan, and kalahari melon seed oil. Formulated to replenish moisture, smooth hair cuticles, and restore natural luster to parched curls and coils.',
+    price: 45,
+    currencyCode: 'USD',
+    featuredImage: '/src/assets/images/safenia_seren_warm_hero_1787295590207.jpg',
+    images: [
+      '/src/assets/images/safenia_seren_warm_hero_1787295590207.jpg',
+      '/src/assets/images/safenia_loc_care_gold_1787295319757.jpg',
+      '/src/assets/images/safenia_product_boxes_1785599787566.jpg',
+    ],
+    category: 'moisture',
+    availableForSale: true,
+    variants: [
+      {
+        id: 'gid://shopify/ProductVariant/moisture-50ml',
+        title: '50ml (Standard Dropper)',
+        price: 45,
+        currencyCode: 'USD',
+        volume: '50ml',
+        availableForSale: true,
+      },
+      {
+        id: 'gid://shopify/ProductVariant/moisture-100ml',
+        title: '100ml (Full Size)',
+        price: 72,
+        compareAtPrice: 90,
+        currencyCode: 'USD',
+        volume: '100ml',
+        availableForSale: true,
+      },
+    ],
+    benefits: [
+      'Restores moisture and suppleness to dry, brittle hair strands',
+      'Smooths cuticles to reduce frizz and lock in hydration',
+      'Lightweight formulation that absorbs quickly with zero build-up',
+    ],
+    ingredients: [
+      'Sweet Almond Oil (Prunus Amygdalus Dulcis)',
+      'Moroccan Argan Kernel Oil (Argania Spinosa)',
+      'Kalahari Melon Seed Oil (Citrullus Lanatus)',
+      'Rosehip Seed Botanical Extract (Rosa Canina)',
+      'Lavender Essential Essence',
+    ],
+    howToUse: [
+      'Warm 2–4 drops between palms.',
+      'Gently press into mid-lengths and ends of damp or dry hair.',
+      'Use after water-based leave-in conditioners to lock in hydration.',
+    ],
+    details: [
+      'Zero build-up formula suitable for daily use',
+      'Safe for color-treated and chemically treated hair',
+      'Packaged in UV-protective amber glass bottle with glass pipette',
+    ],
+  },
+  {
+    id: 'gid://shopify/Product/safenia-scalp-therapy',
+    handle: 'safenia-scalp-therapy',
+    title: 'Safenia Clarifying Scalp Therapy Drops',
+    description:
+      'A soothing botanical scalp elixir infused with tea tree, peppermint, and chamomile. Formulated to calm scalp dryness, support balanced sebum, and provide refreshing comfort for tight protective styles and locs.',
+    price: 42,
+    currencyCode: 'USD',
+    featuredImage: '/src/assets/images/safenia_scalp_pipette_1787295337432.jpg',
+    images: [
+      '/src/assets/images/safenia_scalp_pipette_1787295337432.jpg',
+      '/src/assets/images/safenia_beard_grooming_1787295352369.jpg',
+      '/src/assets/images/safenia_hero_bottle_1785599770184.jpg',
+    ],
+    category: 'scalp',
+    availableForSale: true,
+    variants: [
+      {
+        id: 'gid://shopify/ProductVariant/scalp-50ml',
+        title: '50ml (Precision Dropper)',
+        price: 42,
+        currencyCode: 'USD',
+        volume: '50ml',
+        availableForSale: true,
+      },
+    ],
+    benefits: [
+      'Cools and refreshes dry or tight scalps instantly',
+      'Helps maintain a balanced, clean, and nourished scalp environment',
+      'Provides soothing relief during protective styling (braids, locs, weaves)',
+    ],
+    ingredients: [
+      'Golden Jojoba Seed Oil (Simmondsia Chinensis)',
+      'Pure Tea Tree Leaf Oil (Melaleuca Alternifolia)',
+      'Peppermint Essential Oil (Mentha Piperita)',
+      'German Chamomile Botanical Extract (Matricaria Chamomilla)',
+      'Neem Seed Oil (Azadirachta Indica)',
+    ],
+    howToUse: [
+      'Apply 2–3 drops directly onto parts or scalp tension areas.',
+      'Gently press into scalp using pad of fingers without scratching.',
+      'Leave in; do not rinse.',
+    ],
+    details: [
+      'Formulated specifically for scalp balance',
+      'Non-comedogenic botanical base',
+      'Refreshingly aromatic herbal scent profile',
+    ],
+  },
+];

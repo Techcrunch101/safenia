@@ -1,121 +1,103 @@
 import React from 'react';
-import { ArrowRight, Sparkles, ShieldCheck, Droplet, Crown } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface HeroSectionProps {
   onShopClick: () => void;
-  onDiscoverClick: () => void;
+  onAboutClick: () => void;
 }
 
-const heroEmeraldImg = '/src/assets/images/safenia_emerald_botanical_hero_1787295575998.jpg';
-const heroBottleImg = '/src/assets/images/safenia_hero_bottle_1785599770184.jpg';
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  onShopClick,
+  onAboutClick,
+}) => {
+  const { t } = useLanguage();
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onShopClick, onDiscoverClick }) => {
   return (
-    <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#050505] text-white">
-      {/* Cinematic Dark Background Atmosphere with Golden Micro Aura */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#080808] via-[#050505] to-[#040404] pointer-events-none" />
-      <div className="absolute top-1/3 -right-32 w-[32rem] h-[32rem] bg-[#BF914A]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 -left-32 w-[32rem] h-[32rem] bg-[#75410A]/15 rounded-full blur-[140px] pointer-events-none" />
-      
-      {/* Floating Gold Spec Particles */}
-      <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 rounded-full bg-[#BF914A]/60 blur-[0.5px] pointer-events-none animate-pulse" />
-      <div className="absolute top-1/2 right-1/3 w-2 h-2 rounded-full bg-[#D8B26F]/40 blur-[1px] pointer-events-none" />
-      <div className="absolute bottom-1/3 left-1/2 w-1 h-1 rounded-full bg-[#F3E5C8]/50 blur-[0.5px] pointer-events-none" />
+    <section className="relative min-h-[92vh] lg:min-h-[96vh] flex items-center justify-center bg-[#070605] pt-24 sm:pt-28 pb-16 lg:pb-12 overflow-hidden">
+      {/* Background Image Container with Cinematic Lighting and Vignette */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <img
+          src="/src/assets/images/safenia_dark_hero_bg_1787788259317.jpg"
+          alt="Safenia Luxury Botanical Bottle"
+          className="w-full h-full object-cover object-center sm:object-right lg:object-center opacity-85 scale-105 transform animate-heroImage"
+        />
+        {/* Dark radial and gradient overlays to guarantee perfect text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#070605] via-[#070605]/80 sm:via-[#070605]/60 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0908] via-transparent to-[#0B0908]/70 z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_50%,rgba(212,175,55,0.08)_0%,transparent_60%)] pointer-events-none z-10" />
+      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        {/* Left Column: Editorial Headline & Copy */}
-        <div className="lg:col-span-7 space-y-7 text-center lg:text-left">
-          {/* Slogan Title Matching Reference 3 */}
-          <h1 className="text-4xl sm:text-6xl xl:text-7xl font-serif-luxury font-normal tracking-tight text-white leading-[1.08]">
-            Nature's Care for{' '}
-            <span className="font-serif-luxury italic text-[#D8B26F] block sm:inline font-normal">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 w-full h-full flex flex-col justify-center relative z-20 py-8 lg:py-16">
+        <div className="max-w-2xl lg:max-w-3xl text-left">
+          
+          {/* 1. Small Eyebrow Label */}
+          <div className="animate-heroText flex items-center space-x-3 mb-4 sm:mb-6">
+            <span className="h-[1px] w-6 bg-[#D4AF37]/60" />
+            <span className="text-[10px] sm:text-[11.5px] uppercase tracking-[0.38em] font-sans-body font-semibold text-[#D4AF37]">
+              BOTANICAL HAIRCARE • EST. MODERN AFRICAN LUXURY
+            </span>
+          </div>
+
+          {/* 2. Main Headline (Editorial Serif Display) */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-serif-luxury font-normal text-[#F5F0E6] leading-[1.04] tracking-tight mb-6 sm:mb-8">
+            <span className="block">
+              Nature’s Care for
+            </span>
+            <span className="block font-serif-luxury italic text-[#D4AF37] font-normal mt-1">
               Every Crown.
             </span>
           </h1>
 
-          {/* Two Structured Explanatory Paragraphs Matching Reference 3 */}
-          <div className="space-y-4 max-w-2xl mx-auto lg:mx-0 text-zinc-300 font-light text-base sm:text-lg leading-relaxed">
+          {/* 3. Supporting Editorial Copy */}
+          <div className="space-y-3 max-w-xl mb-8 sm:mb-10 text-sm sm:text-base text-[#D9CCB8]/90 font-sans-body font-light leading-relaxed animate-heroSub">
             <p>
               Luxury botanical formulations created to nourish every crown—from natural hair and protective styles to locs, braids, curls, coils, beards, and healthy scalps.
             </p>
-            <p className="text-sm sm:text-base text-zinc-400">
+            <p className="text-xs sm:text-sm text-[#B3ACA0]">
               Crafted using carefully selected botanical oils and backed by modern formulation standards, every bottle is designed to support stronger, healthier, more resilient hair.
             </p>
           </div>
 
-          {/* Action CTAs */}
-          <div className="pt-3 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+          {/* 4. Tactile Premium CTAs */}
+          <div className="animate-heroCta flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-5">
             <button
               onClick={onShopClick}
-              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#75410A] via-[#BF914A] to-[#D8B26F] hover:from-[#9E6924] hover:to-[#F3E5C8] text-black font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-2xl transition-all transform hover:scale-105 flex items-center justify-center space-x-2.5 cursor-pointer"
+              className="px-8 py-4 bg-[#D4AF37] text-[#0B0908] text-[11px] uppercase tracking-[0.26em] font-sans-body font-semibold hover:bg-[#F3E5AB] transition-all duration-300 shadow-[0_4px_25px_rgba(212,175,55,0.3)] flex items-center justify-center space-x-2.5 cursor-pointer group"
             >
-              <span>Explore Collection</span>
-              <ArrowRight className="w-4 h-4 text-black" />
+              <span>{t('hero_cta_shop', 'SHOP COLLECTION')}</span>
+              <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform duration-300" />
             </button>
 
             <button
-              onClick={onDiscoverClick}
-              className="w-full sm:w-auto px-8 py-4 bg-black/60 hover:bg-[#BF914A]/20 text-[#F3E5C8] border border-[#BF914A]/40 font-bold text-xs uppercase tracking-[0.2em] rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer backdrop-blur-md"
+              onClick={onAboutClick}
+              className="px-7 py-4 border border-[#D4AF37]/50 text-[#F5F0E6] text-[11px] uppercase tracking-[0.26em] font-sans-body font-medium hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all duration-300 flex items-center justify-center cursor-pointer"
             >
-              <span>Discover Ingredients</span>
+              <span>DISCOVER THE RITUAL</span>
             </button>
           </div>
 
-          {/* 4 Micro Trust Badges */}
-          <div className="pt-8 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs text-zinc-400">
-            <div className="flex items-center space-x-2 justify-center lg:justify-start">
-              <Droplet className="w-4 h-4 text-[#BF914A] shrink-0" />
-              <span>100% Cold-Pressed</span>
-            </div>
-            <div className="flex items-center space-x-2 justify-center lg:justify-start">
-              <ShieldCheck className="w-4 h-4 text-[#BF914A] shrink-0" />
-              <span>Zero Build-Up</span>
-            </div>
-            <div className="flex items-center space-x-2 justify-center lg:justify-start">
-              <Sparkles className="w-4 h-4 text-[#BF914A] shrink-0" />
-              <span>GMP Certified</span>
-            </div>
-            <div className="flex items-center space-x-2 justify-center lg:justify-start">
-              <Crown className="w-4 h-4 text-[#BF914A] shrink-0" />
-              <span>For Every Crown</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column: Hero Dropper Artwork with Gold Foil Accent */}
-        <div className="lg:col-span-5 relative flex justify-center">
-          <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden border border-[#BF914A]/40 shadow-2xl bg-black group">
-            <img
-              src={heroEmeraldImg}
-              alt="Safenia Growth Oil Dropper Bottle with Hibiscus, Amla, Castor and Rosemary"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-            />
-            {/* Subtle Vignette Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20" />
-
-            {/* Floating Product Callout */}
-            <div className="absolute bottom-6 left-6 right-6 p-4 glass-gold rounded-2xl border border-[#BF914A]/40 shadow-xl flex items-center justify-between">
-              <div>
-                <div className="text-[10px] uppercase tracking-widest text-[#D8B26F] font-bold">
-                  Flagship Formulation
-                </div>
-                <div className="font-serif-luxury text-base font-bold text-white">
-                  Safenia Growth Oil (50ml)
-                </div>
-                <div className="text-[11px] text-zinc-300">Red Hibiscus · Rosemary · Amla · Castor</div>
-              </div>
-              <button
-                onClick={onShopClick}
-                className="px-3.5 py-2 bg-[#BF914A] hover:bg-[#D8B26F] text-black text-xs font-bold uppercase tracking-wider rounded-lg transition-colors cursor-pointer shrink-0"
-              >
-                Shop
-              </button>
-            </div>
+          {/* Subtle Editorial Assurance Divider */}
+          <div className="mt-12 pt-6 border-t border-[#D4AF37]/20 flex flex-wrap items-center gap-x-6 gap-y-2 text-[10.5px] uppercase tracking-[0.24em] text-[#B3ACA0] font-sans-body">
+            <span className="flex items-center space-x-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+              <span>Pure Cold-Pressed</span>
+            </span>
+            <span className="text-[#D4AF37]/40">•</span>
+            <span className="flex items-center space-x-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+              <span>Zero Fillers</span>
+            </span>
+            <span className="text-[#D4AF37]/40">•</span>
+            <span className="flex items-center space-x-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+              <span>Handcrafted Small Batch</span>
+            </span>
           </div>
         </div>
       </div>
     </section>
   );
 };
+
 

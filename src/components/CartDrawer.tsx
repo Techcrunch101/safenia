@@ -1,268 +1,246 @@
-import React, { useState } from 'react';
-import { CartItem, Currency, ShopifyConfig } from '../types';
-import { formatPrice } from '../data/currencies';
-import { X, Trash2, ArrowRight, Gift, ShoppingBag, ExternalLink, ShieldCheck, Sparkles, Store } from 'lucide-react';
-import { buildShopifyCheckoutUrl } from '../utils/shopify';
+import React from 'react';
+import { ShopifyCart } from '../types';
+import { formatPrice, isShopifyConfigured } from '../utils/shopify';
+import { X, Trash2, ArrowRight, ShoppingBag, Leaf, AlertCircle, Loader2 } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface CartDrawerProps {
   isOpen: boolean;
-  cartItems: CartItem[];
-  selectedCurrency: Currency;
-  shopifyConfig: ShopifyConfig;
+  cart: ShopifyCart | null;
+  isLoading?: boolean;
   onClose: () => void;
-  onUpdateQuantity: (productId: string, quantity: number) => void;
-  onRemoveItem: (productId: string) => void;
-  onProceedToCheckout: (appliedDiscount: number, giftNote: string) => void;
-  onOpenShopifyConfig: () => void;
+  onUpdateQuantity: (lineId: string, quantity: number) => void;
+  onRemoveItem: (lineId: string) => void;
+  onCheckout: () => void;
+  onContinueShopping: () => void;
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({
   isOpen,
-  cartItems,
-  selectedCurrency,
-  shopifyConfig,
+  cart,
+  isLoading = false,
   onClose,
   onUpdateQuantity,
   onRemoveItem,
-  onProceedToCheckout,
-  onOpenShopifyConfig,
+  onCheckout,
+  onContinueShopping,
 }) => {
+  const { t } = useLanguage();
+
   if (!isOpen) return null;
 
-  const [couponCode, setCouponCode] = useState('');
-  const [appliedDiscount, setAppliedDiscount] = useState(0);
-  const [couponError, setCouponError] = useState('');
-  const [giftNote, setGiftNote] = useState('');
-  const [showGiftInput, setShowGiftInput] = useState(false);
-
-  const subtotalUSD = cartItems.reduce((acc, item) => {
-    const base = item.isSubscription ? item.product.price * 0.85 : item.product.price;
-    return acc + base * item.quantity;
-  }, 0);
-
-  const freeShippingThresholdUSD = 120;
-  const progressPercentage = Math.min(100, (subtotalUSD / freeShippingThresholdUSD) * 100);
-
-  const handleApplyCoupon = (e: React.FormEvent) => {
-    e.preventDefault();
-    const code = couponCode.trim().toUpperCase();
-    if (code === 'CROWN20' || code === 'SAFENIA20') {
-      setAppliedDiscount(0.2); // 20% off
-      setCouponError('');
-    } else if (code === 'ROYAL10' || code === 'WELCOME10') {
-      setAppliedDiscount(0.1);
-      setCouponError('');
-    } else {
-      setCouponError('Try code "CROWN20" for 20% off your crown ritual.');
-    }
-  };
-
-  const discountAmountUSD = subtotalUSD * appliedDiscount;
-  const finalTotalUSD = subtotalUSD - discountAmountUSD;
-
-  // Direct Shopify Checkout link handler
-  const handleShopifyCheckout = () => {
-    if (shopifyConfig.useDirectShopifyCheckout) {
-      const url = buildShopifyCheckoutUrl(
-        cartItems,
-        shopifyConfig,
-        appliedDiscount > 0 ? (couponCode || 'CROWN20') : undefined,
-        giftNote
-      );
-      window.open(url, '_blank');
-    } else {
-      onProceedToCheckout(appliedDiscount, giftNote);
-    }
-  };
+  const lines = cart?.lines || [];
+  const totalQuantity = cart?.totalQuantity || 0;
+  const subtotal = cart?.cost?.subtotalAmount?.amount ? Number(cart.cost.subtotalAmount.amount) : 0;
+  const currencyCode = cart?.cost?.subtotalAmount?.currencyCode || 'USD';
+  const hasConfiguredShopify = isShopifyConfigured();
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden glass-dark backdrop-blur-md flex justify-end animate-fadeIn">
-      <div className="w-full max-w-md bg-[#0c0c0d] border-l border-[#BF914A]/40 h-full flex flex-col justify-between p-6 shadow-2xl text-white">
-        {/* Cart Header */}
-        <div>
-          <div className="flex items-center justify-between pb-4 border-b border-[#BF914A]/20">
-            <div className="flex items-center space-x-2">
-              <ShoppingBag className="w-5 h-5 text-[#BF914A]" />
-              <h2 className="text-xl font-serif-luxury font-bold text-white uppercase tracking-wider">
-                Shopping Cart ({cartItems.reduce((a, b) => a + b.quantity, 0)})
-              </h2>
+    <div className="fixed inset-0 z-50 overflow-hidden animate-fadeIn select-none">
+      {/* Backdrop */}
+      <div
+        onClick={onClose}
+        className="fixed inset-0 bg-[#000000]/80 backdrop-blur-xs transition-opacity duration-300"
+      />
+
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-10">
+        <div className="w-screen max-w-md bg-[#0B0908] border-l border-[#D4AF37]/20 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex flex-col justify-between text-[#F5F0E6]">
+          
+          {/* Header */}
+          <div className="px-6 sm:px-8 py-6 border-b border-[#D4AF37]/20 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <span className="font-serif-luxury text-2xl tracking-wide text-[#F5F0E6]">
+                {t('cart_title', 'YOUR BAG')}
+              </span>
+              <span className="bg-[#D4AF37] text-[#0B0908] text-[10px] font-sans-body font-bold px-2.5 py-0.5 rounded-xs">
+                {totalQuantity}
+              </span>
             </div>
+
             <button
               onClick={onClose}
-              className="p-1.5 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="p-1.5 text-[#B3ACA0] hover:text-[#D4AF37] transition-colors duration-200 cursor-pointer"
+              aria-label="Close cart"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Free Shipping Progress */}
-          <div className="py-3.5 border-b border-zinc-800 space-y-1.5">
-            <div className="flex justify-between text-xs text-[#D8B26F]">
-              <span>
-                {subtotalUSD >= freeShippingThresholdUSD
-                  ? '🎉 You unlocked Free Express Worldwide Shipping!'
-                  : `Add ${formatPrice(freeShippingThresholdUSD - subtotalUSD, selectedCurrency)} for Free Express Shipping`}
-              </span>
-            </div>
-            <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-[#75410A] to-[#BF914A] transition-all duration-500"
-                style={{ width: `${progressPercentage}%` }}
-              ></div>
-            </div>
-          </div>
-        </div>
+          {/* Line Items List */}
+          <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-4">
+            {!hasConfiguredShopify && (
+              <div className="p-3 border border-[#D4AF37]/30 bg-[#14110E] text-[11px] font-sans-body text-[#D4AF37] flex items-start space-x-2">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-[#D4AF37]" />
+                <span>Storefront Preview Mode: Connect your Shopify Storefront Token in Settings to enable live cart synchronization.</span>
+              </div>
+            )}
 
-        {/* Cart Items List */}
-        <div className="flex-1 overflow-y-auto py-4 space-y-3">
-          {cartItems.length > 0 ? (
-            cartItems.map((item) => {
-              const unitPriceUSD = item.isSubscription ? item.product.price * 0.85 : item.product.price;
-              return (
-                <div
-                  key={item.product.id}
-                  className="p-3 bg-black/60 rounded-xl border border-zinc-800 flex items-center space-x-3 text-xs"
-                >
-                  <img
-                    src={item.product.image}
-                    alt={item.product.name}
-                    className="w-16 h-16 object-cover rounded-lg border border-[#BF914A]/30 shrink-0"
-                  />
-                  <div className="flex-1 space-y-1">
-                    <div className="font-serif-luxury text-sm font-bold text-white leading-tight">
-                      {item.product.name}
-                    </div>
-                    {item.isSubscription && (
-                      <span className="text-[10px] text-[#D8B26F] font-semibold bg-[#BF914A]/20 px-2 py-0.5 rounded">
-                        Auto-Refill ({item.subscriptionInterval})
-                      </span>
-                    )}
-                    <div className="text-zinc-400 text-[11px]">{item.product.volume}</div>
-                    <div className="flex items-center justify-between pt-1">
-                      <div className="flex items-center border border-zinc-700 rounded px-2 py-0.5">
-                        <button
-                          onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-                          className="px-1 text-zinc-400 hover:text-white"
-                        >
-                          -
-                        </button>
-                        <span className="px-2 text-white font-semibold">{item.quantity}</span>
-                        <button
-                          onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-                          className="px-1 text-zinc-400 hover:text-white"
-                        >
-                          +
-                        </button>
-                      </div>
-                      <span className="font-serif-luxury font-bold text-white text-sm">
-                        {formatPrice(unitPriceUSD * item.quantity, selectedCurrency)}
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => onRemoveItem(item.product.id)}
-                    className="text-zinc-500 hover:text-red-400 p-1 cursor-pointer"
-                    title="Remove item"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+            {lines.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-16">
+                <div className="w-14 h-14 bg-[#14110E] border border-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37]">
+                  <ShoppingBag className="w-6 h-6" />
                 </div>
-              );
-            })
-          ) : (
-            <div className="text-center py-16 text-zinc-500 text-xs space-y-2">
-              <ShoppingBag className="w-8 h-8 text-[#BF914A]/40 mx-auto" />
-              <p className="font-serif-luxury text-lg text-zinc-400">Your Cart is Empty</p>
-              <p>Explore our cold-pressed botanical hair oils to begin.</p>
+                <div className="space-y-1">
+                  <h3 className="font-serif-luxury text-2xl text-[#F5F0E6]">
+                    {t('cart_empty_title', 'Your bag is empty')}
+                  </h3>
+                  <p className="text-xs text-[#B3ACA0] max-w-xs leading-relaxed font-sans-body font-light">
+                    {t(
+                      'cart_empty_desc',
+                      'Explore our botanical formulations to begin your intentional crown care journey.'
+                    )}
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    onClose();
+                    onContinueShopping();
+                  }}
+                  className="px-7 py-3.5 bg-[#D4AF37] text-[#0B0908] text-[11px] font-semibold uppercase tracking-[0.22em] font-sans-body cursor-pointer hover:bg-[#F3E5AB] transition-colors duration-300"
+                >
+                  {t('cart_continue_shopping', 'EXPLORE THE COLLECTION')}
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {lines.map((item) => {
+                  const unitPrice = item.selectedVariant.price;
+                  const itemTotal = unitPrice * item.quantity;
+                  const image = item.product.featuredImage || item.product.images[0] || '';
+                  const isAvailable = item.selectedVariant.availableForSale !== false;
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex space-x-4 p-3.5 bg-[#14110E] border border-[#D4AF37]/15 text-left"
+                    >
+                      {/* Thumbnail */}
+                      <div className="w-16 h-20 bg-[#0B0908] border border-[#D4AF37]/10 overflow-hidden shrink-0">
+                        <img
+                          src={image}
+                          alt={item.product.title}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+
+                      {/* Details */}
+                      <div className="flex-1 flex flex-col justify-between">
+                        <div className="space-y-0.5">
+                          <div className="flex items-start justify-between">
+                            <h4 className="font-serif-luxury text-base text-[#F5F0E6] line-clamp-1">
+                              {item.product.title}
+                            </h4>
+                            <button
+                              onClick={() => onRemoveItem(item.id)}
+                              className="text-[#7A746B] hover:text-[#D4AF37] transition-colors p-1 cursor-pointer"
+                              title="Remove item"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                          {item.selectedVariant.title && item.selectedVariant.title !== 'Default Title' && (
+                            <div className="text-[9.5px] text-[#D4AF37] uppercase tracking-wider font-sans-body">
+                              {item.selectedVariant.title}
+                            </div>
+                          )}
+                          {!isAvailable && (
+                            <div className="text-[9px] text-red-400 font-sans-body uppercase tracking-wider font-medium">
+                              Currently Out of Stock
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2">
+                          {/* Stepper */}
+                          <div className="flex items-center border border-[#D4AF37]/30 bg-[#0B0908]">
+                            <button
+                              onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                              className="px-2.5 py-0.5 text-xs text-[#F5F0E6] hover:bg-[#D4AF37]/20 transition-colors cursor-pointer"
+                            >
+                              -
+                            </button>
+                            <span className="px-2.5 text-xs font-semibold font-sans-body text-[#F5F0E6]">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                              className="px-2.5 py-0.5 text-xs text-[#F5F0E6] hover:bg-[#D4AF37]/20 transition-colors cursor-pointer"
+                            >
+                              +
+                            </button>
+                          </div>
+
+                          {/* Item Price */}
+                          <div className="text-base font-serif-luxury font-semibold text-[#D4AF37]">
+                            {formatPrice(itemTotal, currencyCode)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Cart Footer */}
+          {lines.length > 0 && (
+            <div className="p-6 sm:p-8 border-t border-[#D4AF37]/20 bg-[#14110E] space-y-4 text-left">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-sans-body uppercase tracking-[0.22em] font-semibold text-[#B3ACA0]">
+                    {t('cart_subtotal', 'SUBTOTAL')}
+                  </span>
+                  <span className="font-serif-luxury font-medium text-2xl text-[#D4AF37]">
+                    {formatPrice(subtotal, currencyCode)}
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#B3ACA0]/80 font-sans-body font-light">
+                  {t('cart_shipping_notice', 'Taxes and shipping calculated securely at Shopify checkout.')}
+                </p>
+              </div>
+
+              <div className="space-y-2.5 pt-1">
+                <button
+                  onClick={onCheckout}
+                  disabled={isLoading}
+                  className="w-full py-4 bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#0B0908] font-bold text-xs uppercase tracking-[0.24em] font-sans-body transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-50 shadow-lg"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#0B0908]" />
+                      <span>GENERATING CHECKOUT...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>{t('cart_checkout_btn', 'PROCEED TO SHOPIFY CHECKOUT')}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#0B0908]" />
+                    </>
+                  )}
+                </button>
+
+                <div className="flex items-center justify-center space-x-1.5 pt-1 text-[10px] text-[#B3ACA0] font-sans-body">
+                  <Leaf className="w-3 h-3 text-[#D4AF37]" />
+                  <span>Carefully packaged with 100% recyclable luxury materials.</span>
+                </div>
+
+                <button
+                  onClick={() => {
+                    onClose();
+                    onContinueShopping();
+                  }}
+                  className="w-full py-2 text-[#B3ACA0] hover:text-[#D4AF37] text-[11px] font-medium uppercase tracking-[0.2em] font-sans-body transition-colors cursor-pointer text-center"
+                >
+                  {t('cart_continue_shopping', 'CONTINUE BROWSING')}
+                </button>
+              </div>
             </div>
           )}
         </div>
-
-        {/* Footer Actions & Summary */}
-        {cartItems.length > 0 && (
-          <div className="pt-4 border-t border-[#BF914A]/20 space-y-3.5">
-            {/* Coupon Code Input */}
-            <form onSubmit={handleApplyCoupon} className="flex gap-2">
-              <input
-                type="text"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                placeholder="Discount Code (e.g. CROWN20)"
-                className="flex-1 bg-black/80 border border-zinc-800 text-xs px-3 py-2 rounded-lg text-white placeholder-zinc-500 focus:outline-none uppercase"
-              />
-              <button
-                type="submit"
-                className="px-3 py-2 bg-[#BF914A]/30 text-[#D8B26F] hover:bg-[#BF914A] hover:text-black border border-[#BF914A]/50 text-xs uppercase font-bold rounded-lg transition-colors cursor-pointer"
-              >
-                Apply
-              </button>
-            </form>
-            {couponError && <p className="text-[10px] text-red-400">{couponError}</p>}
-            {appliedDiscount > 0 && (
-              <p className="text-[10px] text-green-400">✓ 20% Botanical Discount Applied!</p>
-            )}
-
-            {/* Gift Note Toggle */}
-            <button
-              onClick={() => setShowGiftInput(!showGiftInput)}
-              className="text-xs text-[#D8B26F] flex items-center gap-1 hover:underline cursor-pointer"
-            >
-              <Gift className="w-3.5 h-3.5" />
-              <span>{showGiftInput ? 'Hide Gift Message' : 'Add Complimentary Gift Message'}</span>
-            </button>
-            {showGiftInput && (
-              <textarea
-                value={giftNote}
-                onChange={(e) => setGiftNote(e.target.value)}
-                placeholder="Write your custom luxury gift message..."
-                className="w-full bg-black/80 border border-zinc-800 rounded-lg p-2 text-xs text-white placeholder-zinc-500 focus:outline-none"
-                rows={2}
-              />
-            )}
-
-            {/* Price Calculations */}
-            <div className="space-y-1.5 text-xs text-zinc-300 pt-2 border-t border-zinc-800">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>{formatPrice(subtotalUSD, selectedCurrency)}</span>
-              </div>
-              {appliedDiscount > 0 && (
-                <div className="flex justify-between text-green-400">
-                  <span>Discount</span>
-                  <span>-{formatPrice(discountAmountUSD, selectedCurrency)}</span>
-                </div>
-              )}
-              <div className="flex justify-between font-bold text-white text-base font-serif-luxury pt-1 border-t border-zinc-800">
-                <span>Total</span>
-                <span className="text-[#D8B26F]">{formatPrice(finalTotalUSD, selectedCurrency)}</span>
-              </div>
-            </div>
-
-            {/* Shopify Store Connection pill indicator */}
-            <div className="flex items-center justify-between text-[11px] text-zinc-400 bg-black/40 px-3 py-1.5 rounded-lg border border-zinc-800">
-              <span className="flex items-center gap-1.5">
-                <Store className="w-3.5 h-3.5 text-[#96BF48]" />
-                <span>Shopify: <strong className="text-zinc-200">{shopifyConfig.storeDomain}</strong></span>
-              </span>
-              <button
-                onClick={onOpenShopifyConfig}
-                className="text-[#D8B26F] hover:underline cursor-pointer font-medium"
-              >
-                Configure
-              </button>
-            </div>
-
-            {/* Primary Shopify Checkout Button */}
-            <button
-              onClick={handleShopifyCheckout}
-              className="w-full py-4 bg-gradient-to-r from-[#75410A] via-[#BF914A] to-[#D8B26F] hover:from-[#9E6924] hover:to-[#F3E5C8] text-black font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-2xl transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2 cursor-pointer"
-            >
-              <span>Checkout with Shopify</span>
-              <ArrowRight className="w-4 h-4 text-black" />
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
 };
+
+
