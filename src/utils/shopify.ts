@@ -230,7 +230,7 @@ export function normalizeShopifyProduct(node: any): Product {
       'Apply 3–5 drops directly onto the scalp or palms using the glass dropper.',
       'Massage gently in circular motions for 2–3 minutes to promote healthy circulation.',
       'Can also be smoothed through mid-lengths and ends to seal in moisture.',
-      'Use 3–4 times weekly or as needed for your hair-care ritual.',
+      'Use 3–4 times weekly or as needed for your hair-care routine.',
     ],
     details: [
       '100% Handcrafted Botanical Formulation',

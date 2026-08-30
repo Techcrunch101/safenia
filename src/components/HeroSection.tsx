@@ -73,7 +73,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               onClick={onAboutClick}
               className="px-7 py-4 border border-[#D4AF37]/50 text-[#F5F0E6] text-[11px] uppercase tracking-[0.26em] font-sans-body font-medium hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all duration-300 flex items-center justify-center cursor-pointer"
             >
-              <span>DISCOVER THE RITUAL</span>
+              <span>DISCOVER CROWN CARE</span>
             </button>
           </div>
 

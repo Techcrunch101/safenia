@@ -108,7 +108,7 @@ export const ContactView: React.FC = () => {
                 </h4>
               </div>
               <p className="text-xs text-[#B3ACA0] font-sans-body font-light leading-relaxed">
-                Unsure which botanical formulation suits your scalp density or loc care ritual? Detail your crown's current routine in your message for tailored guidance from our specialists.
+                Unsure which botanical formulation suits your scalp density or loc care routine? Detail your crown's current regimen in your message for tailored guidance from our specialists.
               </p>
             </div>
           </div>

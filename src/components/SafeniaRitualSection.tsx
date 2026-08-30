@@ -37,7 +37,7 @@ export const SafeniaRitualSection: React.FC<SafeniaRitualSectionProps> = ({ onSh
             DOCUMENTED
           </span>
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif-luxury font-normal text-[#F5F0E6] tracking-tight">
-            Sixteen weeks, one ritual.
+            Sixteen weeks, one regimen.
           </h2>
           <p className="text-sm sm:text-base text-[#B3ACA0] font-sans-body font-light leading-relaxed max-w-xl">
             Photographed under identical lighting, unretouched. Results vary with consistency, health and hair type — we make no promises beyond care.
@@ -133,7 +133,7 @@ export const SafeniaRitualSection: React.FC<SafeniaRitualSectionProps> = ({ onSh
                   onClick={onShopClick}
                   className="px-8 py-4 bg-[#D4AF37] text-[#0B0908] text-[11px] uppercase tracking-[0.24em] font-sans-body font-semibold hover:bg-[#F3E5AB] transition-all duration-300 shadow-[0_4px_20px_rgba(212,175,55,0.25)] flex items-center justify-center space-x-2.5 cursor-pointer"
                 >
-                  <span>BEGIN YOUR RITUAL</span>
+                  <span>BEGIN YOUR REGIMEN</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

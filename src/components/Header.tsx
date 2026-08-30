@@ -43,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
   const navItems: { label: string; page: PageView }[] = [
     { label: t('nav_shop', 'SHOP'), page: 'shop' },
     { label: t('nav_about', 'ABOUT'), page: 'about' },
-    { label: t('nav_ritual', 'RITUALS'), page: 'ritual' },
+    { label: t('nav_ritual', 'CROWN CARE'), page: 'ritual' },
     { label: t('nav_journal', 'JOURNAL'), page: 'journal' },
     { label: t('nav_contact', 'CONTACT'), page: 'contact' },
   ];

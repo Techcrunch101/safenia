@@ -37,7 +37,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     // Navigation
     nav_shop: 'SHOP',
     nav_about: 'ABOUT',
-    nav_ritual: 'RITUALS',
+    nav_ritual: 'CROWN CARE',
     nav_journal: 'JOURNAL',
     nav_contact: 'CONTACT',
     nav_search: 'SEARCH',
@@ -72,7 +72,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     // Why Safenia
     why_eyebrow: 'THE BOTANICAL STANDARD',
     why_title: 'WHY SAFENIA LUXURY OILS',
-    why_subtitle: 'Rooted in botanical purity and generational ritual. Pure nature, zero compromise.',
+    why_subtitle: 'Rooted in botanical purity and generational wisdom. Pure nature, zero compromise.',
     why_1_title: '100% Cold-Pressed',
     why_1_desc: 'Extracted at low temperatures to preserve living antioxidants, essential fatty acids, and phytonutrients.',
     why_2_title: 'Scalp-First Nutrition',
@@ -84,7 +84,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     // About Teaser
     about_eyebrow: 'OUR HERITAGE',
-    about_quote: '“We formulate not merely for aesthetic sheen, but to reawaken the sacred ritual of crown self-care.”',
+    about_quote: '“We formulate not merely for aesthetic sheen, but to reawaken the art of crown self-care.”',
     about_founder_title: 'The Safenia Philosophy',
     about_founder_text:
       'Born from a devotion to ancestral botanical recipes and modern scalp health science, Safenia Luxury Oils creates intentional self-care elixirs for textured hair, locs, beards, and sensitive scalps.',
@@ -92,7 +92,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     // Ritual Section
     ritual_eyebrow: 'MINDFUL CROWN WELLNESS',
-    ritual_title: 'THE THREE-STEP APOTHECARY RITUAL',
+    ritual_title: 'THE THREE-STEP APOTHECARY REGIMEN',
     ritual_subtitle: 'Transform your daily routine into a grounding moment of mindful self-adornment.',
     ritual_step1_title: '01. Warm & Awaken',
     ritual_step1_desc: 'Dispense 4–6 drops into your palms. Rub gently to activate botanical aromatics.',
@@ -100,7 +100,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: 'Massage in slow, circular motions across crown meridian points for 3–5 minutes.',
     ritual_step3_title: '03. Crown Sealing',
     ritual_step3_desc: 'Smooth remaining elixir down lengths and ends to lock in hydration and impart a radiant glow.',
-    ritual_cta: 'EXPLORE THE FULL RITUAL GUIDE',
+    ritual_cta: 'EXPLORE THE FULL CARE GUIDE',
 
     // Shop by Need
     need_eyebrow: 'TARGETED BOTANICAL CARE',
@@ -123,7 +123,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     // Newsletter
     news_eyebrow: 'THE BOTANICAL INNER CIRCLE',
     news_title: 'Join Our Crown Journal',
-    news_subtitle: 'Receive private invitations to small-batch formulation releases and exclusive herbal care rituals.',
+    news_subtitle: 'Receive private invitations to small-batch formulation releases and exclusive herbal care guides.',
     news_placeholder: 'Enter your email address',
     news_button: 'SUBSCRIBE',
     news_success: 'Thank you. You are now welcomed into the Safenia Inner Circle.',
@@ -132,7 +132,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     // Cart Drawer
     cart_title: 'YOUR CROWN BAG',
     cart_empty_title: 'Your bag is empty',
-    cart_empty_desc: 'Explore our cold-pressed elixirs and artisan accessories to begin your ritual.',
+    cart_empty_desc: 'Explore our cold-pressed elixirs and artisan accessories to begin your regimen.',
     cart_continue_shopping: 'CONTINUE BROWSING',
     cart_subtotal: 'SUBTOTAL',
     cart_shipping_notice: 'Taxes and shipping calculated at checkout',
@@ -156,7 +156,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     // Navigation
     nav_shop: 'BOUTIQUE',
     nav_about: 'HISTOIRE',
-    nav_ritual: 'RITUELS',
+    nav_ritual: 'SOINS DE LA COURONNE',
     nav_journal: 'JOURNAL',
     nav_contact: 'CONTACT',
     nav_search: 'RECHERCHE',
@@ -191,7 +191,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     // Why Safenia
     why_eyebrow: 'LE STANDARD BOTANIQUE',
     why_title: 'POURQUOI SAFENIA LUXURY OILS',
-    why_subtitle: 'Enraciné dans la pureté végétale et le rituel ancestral. Pure nature, sans aucun compromis.',
+    why_subtitle: 'Enraciné dans la pureté végétale et la sagesse ancestrale. Pure nature, sans aucun compromis.',
     why_1_title: '100% Pressé à Froid',
     why_1_desc: 'Extrait à basse température pour préserver les antioxydants vivants, acides gras et phytonutriments.',
     why_2_title: 'Nutrition du Cuir Chevelu',
@@ -203,7 +203,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     // About Teaser
     about_eyebrow: 'NOTRE HÉRITAGE',
-    about_quote: '« Nous ne formulons pas pour une simple brillance, mais pour réveiller le rituel sacré du soin de soi. »',
+    about_quote: '« Nous ne formulons pas pour une simple brillance, mais pour réveiller l’art précieux du soin de soi. »',
     about_founder_title: 'La Philosophie Safenia',
     about_founder_text:
       'Née d’une dévotion aux recettes végétales ancestrales et à la science moderne du cuir chevelu, Safenia crée des élixirs pour cheveux texturés, locks, barbes et peaux sensibles.',
@@ -211,7 +211,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     // Ritual Section
     ritual_eyebrow: 'BIEN-ÊTRE CAPILLAIRE CONSCIENT',
-    ritual_title: 'LE RITUEL D’APOTHICAIRE EN 3 GESTES',
+    ritual_title: 'LE PROTOCOLE D’APOTHICAIRE EN 3 GESTES',
     ritual_subtitle: 'Transformez votre routine en un moment d’ancrage et de raffinement personnel.',
     ritual_step1_title: '01. Réchauffer & Éveiller',
     ritual_step1_desc: 'Versez 4 à 6 gouttes au creux des mains. Frottez délicatement pour libérer les arômes.',
@@ -219,7 +219,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: 'Massez en mouvements circulaires lents sur les méridiens crâniens pendant 3 à 5 minutes.',
     ritual_step3_title: '03. Scellage de la Couronne',
     ritual_step3_desc: 'Lissez le reste d’huile sur les longueurs et pointes pour sceller l’hydratation et illuminer.',
-    ritual_cta: 'DÉCOUVRIR LE GUIDE DU RITUEL',
+    ritual_cta: 'DÉCOUVRIR LE GUIDE DE SOIN',
 
     // Shop by Need
     need_eyebrow: 'SOINS BOTANIQUES CIBLÉS',
@@ -242,7 +242,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     // Newsletter
     news_eyebrow: 'LE CERCLE BOTANIQUE PRIVÉ',
     news_title: 'Rejoignez le Journal de la Couronne',
-    news_subtitle: 'Recevez des invitations privées pour nos lancements limités et nos rituels capillaires exclusifs.',
+    news_subtitle: 'Recevez des invitations privées pour nos lancements limités et nos routines capillaires exclusives.',
     news_placeholder: 'Entrez votre adresse email',
     news_button: 'S’INSCRIRE',
     news_success: 'Merci. Bienvenue dans le Cercle Intime Safenia.',
@@ -251,7 +251,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     // Cart Drawer
     cart_title: 'VOTRE PANIER',
     cart_empty_title: 'Votre panier est vide',
-    cart_empty_desc: 'Explorez nos élixirs pressés à froid et accessoires précieux pour débuter votre rituel.',
+    cart_empty_desc: 'Explorez nos élixirs pressés à froid et accessoires précieux pour débuter votre routine de soin.',
     cart_continue_shopping: 'CONTINUER LES ACHATS',
     cart_subtotal: 'SOUS-TOTAL',
     cart_shipping_notice: 'Taxes et frais de port calculés au paiement',
@@ -274,7 +274,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   it: {
     nav_shop: 'NEGOZIO',
     nav_about: 'STORIA',
-    nav_ritual: 'RITUALI',
+    nav_ritual: 'CURA DELLA CORONA',
     nav_journal: 'DIARIO',
     nav_contact: 'CONTATTO',
     nav_search: 'CERCA',
@@ -305,7 +305,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     why_eyebrow: 'LO STANDARD BOTANICO',
     why_title: 'PERCHÉ SAFENIA LUXURY OILS',
-    why_subtitle: 'Radicato nella purezza botanica e nel rituale generazionale. Pura natura, zero compromessi.',
+    why_subtitle: 'Radicato nella purezza botanica e nella saggezza generazionale. Pura natura, zero compromessi.',
     why_1_title: '100% Spremuto a Freddo',
     why_1_desc: 'Estratto a basse temperature per preservare antiossidanti ed acidi grassi essenziali.',
     why_2_title: 'Nutrizione del Cuoio Capelluto',
@@ -316,13 +316,13 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     why_4_desc: 'Senza oli minerali, profumi sintetici, solfati aggressivi o siliconi.',
 
     about_eyebrow: 'LE NOSTRE RADICI',
-    about_quote: '«Non formuliamo per una lucentezza passeggera, ma per risvegliare il sacro rituale della cura di sé.»',
+    about_quote: '«Non formuliamo per una lucentezza passeggera, ma per risvegliare l’arte autentica della cura di sé.»',
     about_founder_title: 'La Filosofia Safenia',
     about_founder_text: 'Ispirata da antiche ricette botaniche e dall’alta scienza del cuoio capelluto.',
     about_cta: 'SCOPRI LA NOSTRA STORIA',
 
     ritual_eyebrow: 'BENESSERE MINDFUL DELLA CORONA',
-    ritual_title: 'IL RITUALE IN 3 FASI',
+    ritual_title: 'IL METODO IN 3 FASI',
     ritual_subtitle: 'Trasforma la tua routine quotidiana in un momento di autentica riconnessione.',
     ritual_step1_title: '01. Riscalda & Risveglia',
     ritual_step1_desc: 'Versa 4-6 gocce sui palmi. Strofina delicatamente per sprigionare gli aromi vegetali.',
@@ -330,7 +330,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: 'Massaggia con movimenti circolari sui meridiani della testa per 3-5 minuti.',
     ritual_step3_title: '03. Sigilla la Chioma',
     ritual_step3_desc: 'Distribuisci l’elisir rimanente su lunghezze e punte per sigillare l’idratazione.',
-    ritual_cta: 'GUIDA COMPLETA AL RITUALE',
+    ritual_cta: 'GUIDA COMPLETA AL METODO',
 
     need_eyebrow: 'CURA BOTANICA MIRATA',
     need_title: 'SCEGLI PER ESIGENZA',
@@ -350,7 +350,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     news_eyebrow: 'LA CERCHIA BOTANICA ESCLUSIVA',
     news_title: 'Iscriviti al Nostro Diario',
-    news_subtitle: 'Ricevi inviti privati per i lotti a tiratura limitata ed esclusivi rituali d’erboristeria.',
+    news_subtitle: 'Ricevi inviti privati per i lotti a tiratura limitata ed esclusive guide di bellezza naturale.',
     news_placeholder: 'Inserisci il tuo indirizzo email',
     news_button: 'ISCRIVITI',
     news_success: 'Grazie. Benvenuto nella Cerchia Safenia.',
@@ -358,7 +358,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     cart_title: 'LA TUA BORSA',
     cart_empty_title: 'La tua borsa è vuota',
-    cart_empty_desc: 'Esplora i nostri elisir spremuti a freddo per iniziare il tuo rituale.',
+    cart_empty_desc: 'Esplora i nostri elisir spremuti a freddo per iniziare la tua routine.',
     cart_continue_shopping: 'CONTINUA GLI ACQUISTI',
     cart_subtotal: 'TOTALE PARZIALE',
     cart_shipping_notice: 'Taxes e spedizione calcolate al checkout',
@@ -379,7 +379,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   es: {
     nav_shop: 'TIENDA',
     nav_about: 'NOSOTROS',
-    nav_ritual: 'RITUALES',
+    nav_ritual: 'CUIDADO CAPILAR',
     nav_journal: 'DIARIO',
     nav_contact: 'CONTACTO',
     nav_search: 'BUSCAR',
@@ -410,7 +410,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     why_eyebrow: 'EL ESTÁNDAR BOTÁNICO',
     why_title: 'POR QUÉ SAFENIA LUXURY OILS',
-    why_subtitle: 'Arraigado en la pureza botánica y el ritual ancestral. Naturaleza pura, cero compromisos.',
+    why_subtitle: 'Arraigado en la pureza botánica y la sabiduría ancestral. Naturaleza pura, cero compromisos.',
     why_1_title: '100% Prensado en Frío',
     why_1_desc: 'Extraído a bajas temperaturas para preservar antioxidantes y ácidos grasos esenciales.',
     why_2_title: 'Nutrición del Cuero Cabelludo',
@@ -421,13 +421,13 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     why_4_desc: 'Sin aceites minerales, fragancias artificiales ni siliconas sintéticas.',
 
     about_eyebrow: 'NUESTRA HERENCIA',
-    about_quote: '«No formulamos solo para lograr brillo superficial, sino para honrar el ritual sagrado del autocuidado.»',
+    about_quote: '«No formulamos solo para lograr brillo superficial, sino para honrar el arte sagrado del autocuidado.»',
     about_founder_title: 'La Filosofía Safenia',
     about_founder_text: 'Fusión de botánica ancestral y ciencia moderna del cuero cabelludo.',
     about_cta: 'DESCUBRE NUESTRA HISTORIA',
 
     ritual_eyebrow: 'BIENESTAR CONSCIENTE DE LA CORONA',
-    ritual_title: 'EL RITUAL EN 3 PASOS',
+    ritual_title: 'EL MÉTODO EN 3 PASOS',
     ritual_subtitle: 'Transforma tu rutina en un momento de calma y conexión personal.',
     ritual_step1_title: '01. Calentar y Despertar',
     ritual_step1_desc: 'Aplica 4–6 gotas en las palmas y frota suavemente para activar los aromas herbales.',
@@ -435,7 +435,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: 'Masajea con movimientos circulares suaves durante 3 a 5 minutos.',
     ritual_step3_title: '03. Sellar la Corona',
     ritual_step3_desc: 'Desliza el aceite restante por largos y puntas para sellar la humedad.',
-    ritual_cta: 'VER LA GUÍA COMPLETA DEL RITUAL',
+    ritual_cta: 'VER LA GUÍA COMPLETA DE CUIDADO',
 
     need_eyebrow: 'CUIDADO BOTÁNICO ESPECIALIZADO',
     need_title: 'COMPRAR POR NECESIDAD',
@@ -455,7 +455,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     news_eyebrow: 'EL CÍRCULO BOTÁNICO PRIVADO',
     news_title: 'Únete a Nuestro Diario',
-    news_subtitle: 'Recibe invitaciones exclusivas para lanzamientos de lotes pequeños y rituales botánicos.',
+    news_subtitle: 'Recibe invitaciones exclusivas para lanzamientos de lotes pequeños y guías botánicas.',
     news_placeholder: 'Ingresa tu correo electrónico',
     news_button: 'SUSCRIBIRSE',
     news_success: 'Gracias. Te damos la bienvenida al Círculo Safenia.',
@@ -463,7 +463,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     cart_title: 'TU BOLSA',
     cart_empty_title: 'Tu bolsa está vacía',
-    cart_empty_desc: 'Explora nuestros elixires prensados en frío para iniciar tu ritual.',
+    cart_empty_desc: 'Explora nuestros elixires prensados en frío para iniciar tu rutina.',
     cart_continue_shopping: 'SEGUIR COMPRANDO',
     cart_subtotal: 'SUBTOTAL',
     cart_shipping_notice: 'Impuestos y envío calculados al pagar',
@@ -484,7 +484,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   de: {
     nav_shop: 'SHOP',
     nav_about: 'ÜBER UNS',
-    nav_ritual: 'RITUALE',
+    nav_ritual: 'HAARPFLEGE',
     nav_journal: 'JOURNAL',
     nav_contact: 'KONTAKT',
     nav_search: 'SUCHE',
@@ -515,7 +515,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     why_eyebrow: 'DER BOTANISCHE STANDARD',
     why_title: 'WARUM SAFENIA LUXURY OILS',
-    why_subtitle: 'Verwurzelt in botanischer Reinheit und generationenübergreifendem Ritual. Reine Natur ohne Kompromisse.',
+    why_subtitle: 'Verwurzelt in botanischer Reinheit und generationenübergreifender Weisheit. Reine Natur ohne Kompromisse.',
     why_1_title: '100% Kaltgepresst',
     why_1_desc: 'Schonend extrahiert zum Erhalt lebendiger Antioxidantien und essentieller Fettsäuren.',
     why_2_title: 'Kopfhaut-Fokus',
@@ -526,13 +526,13 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     why_4_desc: 'Frei von Mineralölen, künstlichen Duftstoffen, Sulfaten und Silikonen.',
 
     about_eyebrow: 'UNSER ERBE',
-    about_quote: '„Wir formulieren nicht nur für äußeren Glanz, sondern für das heilige Ritual der achtsamen Selbstfürsorge.“',
+    about_quote: '„Wir formulieren nicht nur für äußeren Glanz, sondern für die achtsame Kunst der Selbstfürsorge.“',
     about_founder_title: 'Die Safenia Philosophie',
     about_founder_text: 'Eine Verbindung aus altem Kräuterwissen und moderner Haarforschung.',
     about_cta: 'UNSERE GESCHICHTE',
 
     ritual_eyebrow: 'ACHTSAME HAARWELLNESS',
-    ritual_title: 'DAS DREI-SCHRITTE-RITUAL',
+    ritual_title: 'DAS DREI-SCHRITTE-PFLEGESYSTEM',
     ritual_subtitle: 'Verwandeln Sie Ihre Pflegeroutine in einen Moment innerer Ruhe und Erdung.',
     ritual_step1_title: '01. Erwärmen & Erwecken',
     ritual_step1_desc: '4–6 Tropfen in die Handflächen geben und sanft verreiben.',
@@ -540,7 +540,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: '3–5 Minuten lang in langsamen, kreisenden Bewegungen einmassieren.',
     ritual_step3_title: '03. Versiegeln der Längen',
     ritual_step3_desc: 'Restliches Öl sanft in die Spitzen einarbeiten für seidigen Glanz.',
-    ritual_cta: 'ZUM RITUAL-LEITFADEN',
+    ritual_cta: 'ZUM PFLEGE-LEITFADEN',
 
     need_eyebrow: 'GEZIELTE PFLANZENPFLEGE',
     need_title: 'NACH BEDÜRFNIS EINKAUFEN',
@@ -560,7 +560,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     news_eyebrow: 'DER EXKLUSIVE BOTANISCHE KREIS',
     news_title: 'Treten Sie unserem Journal bei',
-    news_subtitle: 'Erhalten Sie Einladungen zu limitierten Chargen und erlesenen Pflegeritualen.',
+    news_subtitle: 'Erhalten Sie Einladungen zu limitierten Chargen und erlesenen Pflegemethoden.',
     news_placeholder: 'E-Mail-Adresse eingeben',
     news_button: 'ABONNIEREN',
     news_success: 'Vielen Dank. Herzlich willkommen im Safenia-Kreis.',
@@ -589,7 +589,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   pt: {
     nav_shop: 'LOJA',
     nav_about: 'SOBRE',
-    nav_ritual: 'RITUAIS',
+    nav_ritual: 'CUIDADO DA COROA',
     nav_journal: 'JOURNAL',
     nav_contact: 'CONTATO',
     nav_search: 'BUSCAR',
@@ -620,7 +620,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     why_eyebrow: 'O PADRÃO BOTÂNICO',
     why_title: 'POR QUE SAFENIA LUXURY OILS',
-    why_subtitle: 'Enraizado na pureza das plantas e no ritual ancestral. Natureza pura, sem concessões.',
+    why_subtitle: 'Enraizado na pureza das plantas e na sabedoria ancestral. Natureza pura, sem concessões.',
     why_1_title: '100% Prensado a Frio',
     why_1_desc: 'Extraído em baixas temperaturas para preservar antioxidantes e ácidos graxos essenciais.',
     why_2_title: 'Foco no Couro Cabeludo',
@@ -631,13 +631,13 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     why_4_desc: 'Sem óleos minerais, fragrâncias sintéticas ou silicones.',
 
     about_eyebrow: 'NOSSA HERANÇA',
-    about_quote: '«Não formulamos apenas para o brilho superficial, mas para honrar o ritual sagrado do autocuidado.»',
+    about_quote: '«Não formulamos apenas para o brilho superficial, mas para honrar a arte sagrada do autocuidado.»',
     about_founder_title: 'A Filosofia Safenia',
     about_founder_text: 'União entre sabedoria ancestral botânica e ciência do couro cabeludo.',
     about_cta: 'CONHEÇA NOSSA HISTÓRIA',
 
     ritual_eyebrow: 'BEM-ESTAR CONSCIENTE DA COROA',
-    ritual_title: 'O RITUAL EM 3 PASSOS',
+    ritual_title: 'O MÉTODO EM 3 PASSOS',
     ritual_subtitle: 'Transforme sua rotina diária em um momento de autocuidado pleno.',
     ritual_step1_title: '01. Aquecer & Despertar',
     ritual_step1_desc: 'Aplique de 4 a 6 gotas nas palmas e esfregue para ativar os aromas.',
@@ -645,7 +645,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: 'Massageie em movimentos circulares por 3 a 5 minutos.',
     ritual_step3_title: '03. Selagem dos Fios',
     ritual_step3_desc: 'Deslize o óleo restante pelo comprimento e pontas para selar a hidratação.',
-    ritual_cta: 'GUIA COMPLETO DO RITUAL',
+    ritual_cta: 'GUIA COMPLETO DE CUIDADOS',
 
     need_eyebrow: 'CUIDADO BOTÂNICO ESPECÍFICO',
     need_title: 'COMPRAR POR NECESSIDADE',
@@ -673,7 +673,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     cart_title: 'SUA SACOLA',
     cart_empty_title: 'Sua sacola está vazia',
-    cart_empty_desc: 'Conheça nossos elixires e inicie seu ritual.',
+    cart_empty_desc: 'Conheça nossos elixires e inicie sua rotina.',
     cart_continue_shopping: 'CONTINUAR COMPRANDO',
     cart_subtotal: 'SUBTOTAL',
     cart_shipping_notice: 'Impostos e frete calculados no checkout',
@@ -694,7 +694,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   ja: {
     nav_shop: 'ショップ',
     nav_about: 'ブランドについて',
-    nav_ritual: 'リチュアル',
+    nav_ritual: 'ヘアケア',
     nav_journal: 'ジャーナル',
     nav_contact: 'お問い合わせ',
     nav_search: '検索',
@@ -725,7 +725,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     why_eyebrow: 'ボタニカルスタンダード',
     why_title: 'サフェニアが選ばれる理由',
-    why_subtitle: '純粋な植物の力と受け継がれるケアの儀式。妥協なき自然の恵み。',
+    why_subtitle: '植物の純粋さと受け継がれる知恵に根ざした、妥協のない自然の恵み。',
     why_1_title: '100% コールドプレス',
     why_1_desc: '熱を加えず圧搾し、抗酸化物質と必須脂肪酸をそのまま抽出。',
     why_2_title: '頭皮ファースト処方',
@@ -736,13 +736,13 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     why_4_desc: '鉱物油、合成香料、乾燥させる硫酸塩を一切排除。',
 
     about_eyebrow: 'ブランドの伝統',
-    about_quote: '「一時的なツヤだけでなく、頭皮と髪を慈しむ神聖なリチュアルをお届けします。」',
+    about_quote: '「私たちは表面的な輝きだけでなく、心を満たす丁寧なセルフケアのために処方しています。」',
     about_founder_title: 'サフェニアの哲学',
     about_founder_text: '伝統的なハーブの知恵と現代の頭皮科学が融合した処方。',
     about_cta: 'ストーリーを読む',
 
     ritual_eyebrow: 'マインドフル・ヘアウェルネス',
-    ritual_title: '3ステップのケアリチュアル',
+    ritual_title: '3ステップのケアメソッド',
     ritual_subtitle: '日々のケアを、心を整える特別な時間へ。',
     ritual_step1_title: '01. 温めて目覚めさせる',
     ritual_step1_desc: '手のひらに4〜6滴取り、優しくこすり合わせてハーブの香りを広げます。',
@@ -750,7 +750,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: '指先で円を描くように3〜5分間ゆっくりと頭皮をほぐします。',
     ritual_step3_title: '03. 髪の毛先の保護',
     ritual_step3_desc: '残ったオイルを毛先に馴染ませ、潤いを閉じ込めます。',
-    ritual_cta: 'リチュアルガイドを見る',
+    ritual_cta: 'ケアガイドを見る',
 
     need_eyebrow: 'お悩み別ケア',
     need_title: '髪と頭皮の目的から選ぶ',
@@ -799,7 +799,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   zh: {
     nav_shop: '甄选商城',
     nav_about: '品牌故事',
-    nav_ritual: '养护仪式',
+    nav_ritual: '养护指南',
     nav_journal: '植物日志',
     nav_contact: '联系我们',
     nav_search: '搜索',
@@ -830,7 +830,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     why_eyebrow: '纯净植物标准',
     why_title: '为何选择 SAFENIA 奢华植物精油',
-    why_subtitle: '植根于植物纯度与世代相传的养护仪式。纯净天然，绝不妥协。',
+    why_subtitle: '植根于植物的纯净与世代相传的智慧。纯粹自然，绝不妥协。',
     why_1_title: '100% 低温冷榨',
     why_1_desc: '低温萃取，完整保留活性抗氧化成分与必需脂肪酸。',
     why_2_title: '头皮根源滋养',
@@ -841,13 +841,13 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     why_4_desc: '绝无矿物油、合成香精或硫酸盐，纯净呵护。',
 
     about_eyebrow: '传承与初心',
-    about_quote: '“我们调配精油不仅是为了表层的光泽，更是为了重拾对自身秀发的温情仪式。”',
+    about_quote: '“我们调配精油不仅是为了表层的光泽，更是为了重拾对自身秀发的温情呵护。”',
     about_founder_title: 'Safenia 的植物哲学',
     about_founder_text: '融合古老草本智慧与现代头皮医学科学。',
     about_cta: '了解品牌故事',
 
     ritual_eyebrow: '静心头皮养护',
-    ritual_title: '三步式头皮养护仪式',
+    ritual_title: '三步式头皮养护流程',
     ritual_subtitle: '将日常护发转变为与自我连接的静心时刻。',
     ritual_step1_title: '01. 温热唤醒',
     ritual_step1_desc: '取 4-6 滴精油于掌心，轻柔搓热，释放草本香气。',
@@ -855,7 +855,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: '顺着头皮经络轻柔打圈按摩 3-5 分钟。',
     ritual_step3_title: '03. 润养发梢',
     ritual_step3_desc: '将剩余精油轻抚至发丝与发梢，锁住水分与光泽。',
-    ritual_cta: '探索完整仪式指南',
+    ritual_cta: '探索完整养护指南',
 
     need_eyebrow: '对症植物养护',
     need_title: '按需求选购',
@@ -904,7 +904,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   ar: {
     nav_shop: 'المتجر',
     nav_about: 'عن العلامة',
-    nav_ritual: 'الطقوس',
+    nav_ritual: 'العناية بالتاج',
     nav_journal: 'المجلة',
     nav_contact: 'تواصل معنا',
     nav_search: 'بحث',
@@ -935,7 +935,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     why_eyebrow: 'المعيار النباتي الخالص',
     why_title: 'لماذا تختار زيوت سافينيا الفاخرة',
-    why_subtitle: 'متجذرة في نقاء الطبيعة والطقوس المتوارثة عبر الأجيال.',
+    why_subtitle: 'متجذرة في نقاء الطبيعة والحكمة المتوارثة عبر الأجيال.',
     why_1_title: '100% معصور على البارد',
     why_1_desc: 'مستخلص في درجات حرارة منخفضة للحفاظ على مضادات الأكسدة الحية.',
     why_2_title: 'تغذية فروة الرأس أولاً',
@@ -946,13 +946,13 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     why_4_desc: 'بدون زيوت معدنية، أو عطور صناعية، أو كبريتات ضارة.',
 
     about_eyebrow: 'إرثنا وأصالتنا',
-    about_quote: '«نحن لا نبتكر التركيبات من أجل لمعان مؤقت، بل لإحياء طقوس العناية المقدسة بالتاج.»',
+    about_quote: '«نحن لا نبتكر التركيبات من أجل لمعان مؤقت، بل لإحياء فن العناية الأصيل بالتاج.»',
     about_founder_title: 'فلسفة سافينيا',
     about_founder_text: 'مزيج فريد بين حكمة الأعشاب القديمة وعلم صحة فروة الرأس الحديث.',
     about_cta: 'اكتشف قصتنا',
 
     ritual_eyebrow: 'العناية الواعية بالتاج',
-    ritual_title: 'طقس الصيدلية النباتية في 3 خطوات',
+    ritual_title: 'منهج الصيدلية النباتية في 3 خطوات',
     ritual_subtitle: 'حوّل روتينك اليومي إلى لحظة تأمل واعتناء عميق بالنفس.',
     ritual_step1_title: '01. تدفئة وتنشيط',
     ritual_step1_desc: 'ضع 4-6 قطرات في راحة يدك وافركها بلطف لتفعيل الروائح العشبية.',
@@ -960,7 +960,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     ritual_step2_desc: 'قم بالتدليك بحركات دائرية هادئة لمدة 3 إلى 5 دقائق.',
     ritual_step3_title: '03. تثبيت الترطيب في الأطراف',
     ritual_step3_desc: 'مرر الزيت المتبقي على أطراف الشعر لحبس الرطوبة واللمعان.',
-    ritual_cta: 'دليل الطقوس الكامل',
+    ritual_cta: 'دليل العناية الكامل',
 
     need_eyebrow: 'عناية نباتية متخصصة',
     need_title: 'تسوق حسب احتياج التاج',
@@ -980,7 +980,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     news_eyebrow: 'الدائرة النباتية الخاصة',
     news_title: 'انضم إلى مجلة سافينيا',
-    news_subtitle: 'احصل على دعوات حصرية للإصدارات المحدودة وأسرار الطقوس النباتية.',
+    news_subtitle: 'احصل على دعوات حصرية للإصدارات المحدودة وأسرار العناية النباتية.',
     news_placeholder: 'أدخل بريدك الإلكتروني',
     news_button: 'اشتراك',
     news_success: 'شكراً لك. أهلاً بك في مجتمع سافينيا الفاخر.',
@@ -988,7 +988,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
 
     cart_title: 'حقيبة التسوق الخاصة بك',
     cart_empty_title: 'حقيبة التسوق فارغة',
-    cart_empty_desc: 'استكشف إكسيراتنا المعصورة على البارد لبدء طقسك اليومي.',
+    cart_empty_desc: 'استكشف إكسيراتنا المعصورة على البارد لبدء روتينك اليومي.',
     cart_continue_shopping: 'متابعة التسوق',
     cart_subtotal: 'المجموع الفرعي',
     cart_shipping_notice: 'يتم احتساب الضرائب والشحن عند إتمام الطلب',
@@ -1009,7 +1009,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   sw: {
     nav_shop: 'DUKA',
     nav_about: 'KUHUSU SISI',
-    nav_ritual: 'RITUAL YA UTUNZAJI',
+    nav_ritual: 'UTUNZAJI WA TAJI',
     nav_journal: 'JARIDA',
     nav_contact: 'WASILIANA NASI',
     nav_search: 'TAFUTA',

@@ -49,7 +49,7 @@ export const AboutTeaser: React.FC<AboutTeaserProps> = ({ onAboutClick }) => {
                 Safenia is composed slowly. Each oil is chosen for a specific function — circulation, sealing, elasticity, calm — then measured against modern formulation standards so that beauty and evidence hold the same weight.
               </p>
               <p className="text-sm sm:text-base text-[#B3ACA0]">
-                We source from growers we know, blend in small batches, and bottle in UV-protective glass. Nothing is added for spectacle. What remains is a ritual that respects your hair, your time, and the earth it came from.
+                We source from growers we know, blend in small batches, and bottle in UV-protective glass. Nothing is added for spectacle. What remains is a care practice that respects your hair, your time, and the earth it came from.
               </p>
             </div>
 

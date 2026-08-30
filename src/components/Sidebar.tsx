@@ -39,7 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const discoverItems = [
     { label: 'About Safenia', page: 'about' as PageView, targetSection: undefined },
-    { label: 'The Safenia Ritual', page: 'home' as PageView, targetSection: 'ritual' },
+    { label: 'The Safenia Method', page: 'home' as PageView, targetSection: 'care' },
     { label: 'Our Story', page: 'about' as PageView, targetSection: 'story' },
   ];
 

@@ -49,7 +49,7 @@ export const NewsletterSection: React.FC = () => {
         </div>
 
         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif-luxury font-normal text-[#F5F0E6]">
-          Join the Safenia Ritual
+          Join the Safenia Circle
         </h2>
 
         <p className="text-xs sm:text-sm text-[#B3ACA0] max-w-xl mx-auto font-light leading-relaxed">

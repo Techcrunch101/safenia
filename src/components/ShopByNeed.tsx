@@ -10,7 +10,7 @@ export const ShopByNeed: React.FC<ShopByNeedProps> = ({ onSelectCategory }) => {
     {
       id: 'growth',
       title: 'Hair Growth',
-      description: 'Density rituals for fuller, stronger lengths.',
+      description: 'Targeted care for fuller, stronger lengths.',
       image: '/src/assets/images/safenia_growth_afro_1787295304984.jpg',
     },
     {
